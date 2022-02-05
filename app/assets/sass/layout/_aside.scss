@@ -1,0 +1,32 @@
+.aside-menu {
+  margin: 30px 50px 50px;
+  &__logo {
+    width: 120px;
+    height: 100px;
+    margin-bottom: 60px;
+    object-fit: contain;
+    img {
+      width: 100%;
+      height: 100%;
+    }
+  }
+  &__title {
+    margin-bottom: 30px;
+    h1 {
+      font-size: 36px;
+      font-weight: 700;
+      color: #010101;
+    }
+  }
+  &__list {
+    list-style-type: none;
+    padding: 0;
+  }
+  &__item {
+    cursor: pointer;
+    font-size: 18px;
+    font-weight: 500;
+    color: #010101;
+    padding: 10px;
+  }
+}

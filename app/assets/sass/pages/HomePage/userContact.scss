@@ -1,0 +1,36 @@
+.user-contact {
+  background-color: #f4f9fc;
+  &__mark {
+    text-transform: uppercase;
+    color: #dd8d97;
+    font-size: 700;
+    letter-spacing: 3px;
+  }
+  &__title {
+    font-size: 1.8rem;
+    font-weight: 800;
+  }
+  &__text {
+    color: #686e73;
+  }
+  &__section {
+    display: flex;
+    align-items: center;
+    padding: 80px 0;
+    margin-top: 30px;
+  }
+
+  .address {
+    display: flex;
+    align-items: center;
+  }
+
+  .input {
+    height: 60px;
+  }
+  .button-address {
+    height: 60px;
+    font-weight: 600;
+    text-transform: uppercase;
+  }
+}

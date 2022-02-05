@@ -1,0 +1,39 @@
+.contact-us {
+  &__banner {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    background-color: #f4f9fc;
+    text-align: center;
+    height: 360px;
+  }
+  &__title {
+    font-size: 2.5rem;
+    font-weight: 800;
+    margin-bottom: 10px;
+  }
+  &__link {
+    font-size: 1.1rem;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    .link-home {
+      color: #000;
+    }
+    .link-blog {
+      color: #b5bbc0;
+    }
+  }
+  .icon {
+    margin: 50px;
+    text-align: center;
+    .icon-map {
+      font-size: 2.4rem;
+    }
+    .text {
+      margin: 16px 650px;
+      font-size: 1.2rem;
+      font-weight: 600;
+    }
+  }
+}

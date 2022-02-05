@@ -1,0 +1,34 @@
+//
+// Theme style
+//
+
+// Mode
+$mode: default;
+
+// Initialize
+@import 'init';
+
+// Components
+@import 'components/components';
+
+//Page
+@import 'pages/AuthPage/auth';
+@import 'pages/NotFoundPage/notFoundPage';
+@import 'pages/HomePage/newShop';
+@import 'pages/HomePage/userContact';
+@import 'pages/HomePage/newProducts';
+@import 'pages/HomePage/laptop';
+@import 'pages/HomePage/smartphone';
+@import 'pages/HomePage/smartwatch';
+@import 'pages/HomePage/flycam';
+@import 'pages/BuyProduct/buyProduct';
+@import 'pages/Blog/blog';
+@import 'pages/ContactUs/contactUs';
+
+// Layout
+@import 'layout/layout';
+@import 'layout/docs/layout';
+
+//fonts
+@import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,300;0,400;0,600;0,700;0,800;0,900;1,400;1,600;1,700;1,800;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;700;800;900&display=swap');

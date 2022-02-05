@@ -1,0 +1,357 @@
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 50px 10px 20px !important;
+
+  &__menu-icon {
+    .icon {
+      width: 26px;
+      height: 26px;
+    }
+
+    .icon-list {
+      width: 100%;
+      padding: 0 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .icon-item {
+      margin-left: 42px;
+      list-style: none;
+      display: flex;
+      align-items: center;
+    }
+
+    .icon-link {
+      display: inline-flex;
+      text-decoration: none;
+      color: var(--color-icon);
+      transition: 0.5s linear;
+      position: relative;
+      z-index: 1;
+      margin: auto;
+
+      .mark {
+        position: absolute;
+        top: -2px;
+        right: -6px;
+        width: 16px;
+        height: 16px;
+        border-radius: 50%;
+        color: #fff;
+        background-color: #c72535;
+        font-size: 0.82rem;
+        font-weight: 500;
+        text-align: center;
+      }
+    }
+
+    .icon-link:hover {
+      color: #474e54;
+    }
+
+    .icon-link i {
+      margin: auto;
+    }
+
+    .icon-link::before {
+      content: '';
+      position: absolute;
+      top: -6px;
+      left: -6px;
+      right: 0;
+      bottom: 0;
+      width: 40px;
+      height: 40px;
+      background: #d4d7d9;
+      border-radius: 50%;
+      z-index: -1;
+      transform: scale(0);
+      transition: 0.3s cubic-bezier(0.95, 0.32, 0.37, 1.21);
+    }
+
+    .icon-link:hover::before {
+      transform: scale(1);
+    }
+
+    .icon-item:nth-child(1) a:hover:before {
+      background: #e7e9eb;
+    }
+
+    .icon-item:nth-child(2) a:hover:before {
+      background: #d4d7d9;
+    }
+
+    .icon-item:nth-child(3) a:hover:before {
+      background: #d4d7d9;
+    }
+
+    .active-icon {
+      color: #474e54;
+      display: inline-flex;
+      transition: 0.5s linear;
+      position: relative;
+      z-index: 1;
+      margin: auto;
+      &::before {
+        transform: scale(1);
+      }
+    }
+  }
+
+  .menu-trigger {
+    span {
+      font-weight: 700;
+      vertical-align: middle;
+      font-size: 14px;
+      margin: 0 10px;
+    }
+  }
+
+  .menu {
+    background: #ffffff;
+    border-radius: 8px;
+    position: absolute;
+    top: 40px;
+    right: 0px;
+    width: 250px;
+    box-shadow: 0px 4px 11px 0px #00000026;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-20px);
+    transition: opacity 0.4s ease, transform 0.4s ease, visibility 0.4s;
+  }
+
+  .menu.active {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+
+  .menu ul {
+    width: 100%;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .menu li {
+    border-bottom: 1px solid #eff2f5;
+    padding: 8px 12px;
+  }
+
+  .menu li a {
+    font-size: 1.231rem;
+    font-weight: 700;
+    text-decoration: none;
+    color: #464255;
+    padding: 0.65rem 1rem;
+    display: block;
+
+    &:hover {
+      border-radius: 7px;
+      background-color: rgba(205, 208, 209, 0.8);
+      transition: color 0.2s ease, background-color 0.2s ease;
+      color: #464255;
+    }
+  }
+}
+
+.products-list {
+  width: 400px;
+  .view-cart {
+    margin-top: 10px;
+    display: flex;
+    justify-content: flex-end;
+  }
+}
+.products-item {
+  cursor: pointer;
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+  transition: color 0.2s ease, background-color 0.2s ease;
+  .left {
+    display: flex;
+  }
+  &__image {
+    width: 60px;
+    height: 60px;
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+  }
+  &__contents {
+    margin-left: 10px;
+  }
+  .title {
+    padding-top: 5px;
+    font-size: 1.3rem;
+    margin-bottom: 0;
+    color: #000;
+    font-weight: 600;
+  }
+  &__price {
+    padding-top: 5px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #dd4453;
+  }
+  &:hover {
+    background-color: rgba(224, 227, 228, 0.8);
+  }
+}
+
+.header-menu {
+  color: rgba(0, 0, 0, 0.5);
+}
+
+nav ul {
+  list-style: none;
+  text-align: center;
+  margin: 0;
+}
+nav ul li {
+  display: inline-block;
+}
+nav ul li a {
+  display: block;
+  padding: 15px;
+  text-decoration: none;
+  color: #aaa;
+  font-weight: 800;
+  text-transform: uppercase;
+  margin: 0 10px;
+}
+nav ul li a,
+nav ul li a:after,
+nav ul li a:before {
+  transition: all 0.5s;
+}
+nav ul li a:hover {
+  color: #555;
+}
+
+nav.fill ul li a {
+  position: relative;
+}
+
+nav.fill ul li a:after {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+  width: 0%;
+  content: '.';
+  color: transparent;
+  background: #aaa;
+  height: 1px;
+}
+
+nav.fill ul li a {
+  transition: all 2s;
+}
+
+nav.fill ul li a:after {
+  text-align: left;
+  content: '.';
+  margin: 0;
+  opacity: 0;
+}
+nav.fill ul li a:hover {
+  color: #fff;
+  z-index: 1;
+}
+nav.fill ul li a:hover:after {
+  z-index: -10;
+  animation: fill 1s forwards;
+  -webkit-animation: fill 1s forwards;
+  -moz-animation: fill 1s forwards;
+  opacity: 1;
+}
+
+/* Keyframes */
+@-webkit-keyframes fill {
+  0% {
+    width: 0%;
+    height: 1px;
+  }
+  50% {
+    width: 100%;
+    height: 1px;
+  }
+  100% {
+    width: 100%;
+    height: 100%;
+    background: #333;
+  }
+}
+
+.header-left {
+  position: relative;
+  form {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    transition: all 1s;
+    width: 50px;
+    height: 50px;
+    background: white;
+    box-sizing: border-box;
+    border-radius: 25px;
+    border: 4px solid white;
+    padding: 5px;
+  }
+
+  input {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 42.5px;
+    line-height: 30px;
+    outline: 0;
+    border: 0;
+    display: none;
+    font-size: 1em;
+    border-radius: 20px;
+    padding: 0 20px;
+  }
+
+  .fa {
+    box-sizing: border-box;
+    padding: 10px;
+    width: 42.5px;
+    height: 42.5px;
+    position: absolute;
+    top: 10%;
+    right: 0;
+    border-radius: 50%;
+    color: #07051a;
+    text-align: center;
+    font-size: 1.2em;
+    transition: all 1s;
+  }
+  form:hover {
+    width: 400px;
+    cursor: pointer;
+    transform: translate(0, -50%);
+  }
+
+  form:hover input {
+    display: block;
+  }
+
+  form:hover .fa {
+    top: 0;
+    background: #07051a;
+    color: white;
+  }
+}

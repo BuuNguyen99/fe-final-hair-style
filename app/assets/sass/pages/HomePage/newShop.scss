@@ -1,0 +1,83 @@
+.new-shop {
+  text-align: center;
+  &__mark {
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    font-weight: 600;
+    color: #dd7c86;
+  }
+  &__header {
+    font-size: 2.5rem;
+    font-weight: 800;
+    margin-bottom: 10px;
+  }
+  &__content {
+    margin: 0 450px;
+    color: #686e73;
+  }
+
+  &__item-product {
+    color: #f2f2f2;
+    position: relative;
+    cursor: pointer;
+    margin-top: 35px;
+    border: 1px solid #f2f2f2;
+    padding: 50px 0;
+    transition: all 0.2s ease-in-out;
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+    &:hover {
+      outline: none;
+      transform: scale(1.02);
+      border: none;
+      box-shadow: 0px 2px 4px 0px #00000026;
+    }
+  }
+
+  .item-1 {
+    height: 300px;
+  }
+  .item-2 {
+    height: 515px;
+  }
+
+  .item-3 {
+    height: 260px;
+  }
+  .item-4 {
+    height: 260px;
+  }
+  .item-5 {
+    height: 260px;
+  }
+  .item-6 {
+    height: 500px;
+  }
+  .item-7 {
+    height: 315px;
+  }
+
+  .show-top {
+    color: #000;
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    .money-sale {
+      font-size: 1.2rem;
+      font-weight: 800;
+    }
+    .money {
+      font-weight: 400;
+      font-size: 1.2rem;
+      color: #bababa;
+      text-decoration: line-through;
+    }
+    .rating {
+      font-size: 0.9rem;
+      color: #dd4453;
+    }
+  }
+}
