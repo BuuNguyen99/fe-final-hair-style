@@ -2,7 +2,6 @@
 import React from 'react';
 import clsx from 'clsx';
 import { Link } from 'react-router-dom';
-import { iconGoogle } from 'shared/constants/commonIcon';
 
 export function Registration() {
   return (
@@ -25,14 +24,6 @@ export function Registration() {
           </Link>
         </div>
       </div>
-
-      <button
-        type="button"
-        className="btn btn-light-primary fw-bolder w-100 mb-5"
-      >
-        {iconGoogle}
-        Sign in with Google
-      </button>
 
       <div className="d-flex align-items-center mb-5">
         <div className="border-bottom border-gray-300 mw-50 w-100" />

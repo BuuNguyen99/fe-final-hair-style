@@ -12,7 +12,7 @@ function Routes() {
 
   return (
     <Switch>
-      {isAuthorized ? (
+      {!isAuthorized ? (
         <Route>
           <Auth />
         </Route>
@@ -20,7 +20,7 @@ function Routes() {
         <Redirect from={ROUTING.AUTH} to="/" />
       )}
 
-      {isAuthorized ? (
+      {!isAuthorized ? (
         <Redirect to="/auth/login" />
       ) : (
         <MasterLayout>

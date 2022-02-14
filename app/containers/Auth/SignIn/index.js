@@ -2,7 +2,7 @@
 import React from 'react';
 import clsx from 'clsx';
 import { Link } from 'react-router-dom';
-import { iconGoogle } from 'shared/constants/commonIcon';
+
 export function Login() {
   return (
     <form className="form w-100" noValidate id="kt_login_signin_form">
@@ -54,18 +54,6 @@ export function Login() {
         >
           <span className="indicator-label">Continue</span>
         </button>
-      </div>
-      <div className="text-center">
-        <div className="text-center text-muted text-uppercase fw-bolder mb-5">
-          or
-        </div>
-        <a
-          href="#"
-          className="btn btn-flex flex-center btn-light btn-lg w-100 mb-5"
-        >
-          {iconGoogle}
-          Continue with Google
-        </a>
       </div>
     </form>
   );
