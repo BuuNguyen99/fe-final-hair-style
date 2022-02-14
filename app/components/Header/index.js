@@ -1,13 +1,12 @@
 import { Popover, Button } from 'antd';
 import React, { useRef } from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { BsCart2 } from 'react-icons/bs';
-import { AiOutlineSearch, AiOutlineUser } from 'react-icons/ai';
+import { AiOutlineUser } from 'react-icons/ai';
 import { useDetectOutsideClick } from './useDetectOutsideClick';
 import { CookiesStorage } from '../../shared/configs/cookie';
 
 function Header() {
-  const history = useHistory();
   const dropdownRef = useRef(null);
   const isAuthen = CookiesStorage.authenticated();
 
@@ -17,8 +16,8 @@ function Header() {
   };
 
   const logout = () => {
+    window.location.reload();
     CookiesStorage.clearData();
-    history.push('/');
   };
 
   const content = (
@@ -96,7 +95,7 @@ function Header() {
       <div className="header-left" />
       <div className="header-right d-flex align-items-center">
         <section className="header-menu">
-          <nav class="fill">
+          <nav className="fill">
             <ul>
               <li>
                 <a href="#">products</a>

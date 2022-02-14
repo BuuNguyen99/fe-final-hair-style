@@ -5,9 +5,13 @@ import {
   GET_PROFILE,
   REGISTER_ACCOUNT,
   UPDATE_PROFILE,
+  LOGIN_ACCOUNT,
 } from 'containers/Auth/constants';
 
 export const initialState = {
+  dataUser: {
+    isFetching: false,
+  },
   dataProfile: {
     isFetching: false,
     profile: '',
@@ -32,6 +36,15 @@ const authReducer = (state = initialState, action) =>
         break;
       case FAILURE(REGISTER_ACCOUNT):
         draft.registerAccount.isFetching = false;
+        break;
+      case REQUEST(LOGIN_ACCOUNT):
+        draft.dataUser.isFetching = true;
+        break;
+      case SUCCESS(LOGIN_ACCOUNT):
+        draft.dataUser.isFetching = false;
+        break;
+      case FAILURE(LOGIN_ACCOUNT):
+        draft.dataUser.isFetching = false;
         break;
       case REQUEST(REMOVE_TOKEN):
         draft.fetching = true;

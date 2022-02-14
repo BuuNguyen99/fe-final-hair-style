@@ -43,7 +43,6 @@ function Registration({ dataRegisterAccount, onRegisterAccount }) {
 
   const onSubmit = data => {
     onRegisterAccount(data, registerAccountCallBack);
-    console.log(JSON.stringify(data, null, 2));
   };
 
   const {

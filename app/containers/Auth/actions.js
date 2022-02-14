@@ -4,17 +4,20 @@ import {
   GET_PROFILE,
   UPDATE_PROFILE,
   REGISTER_ACCOUNT,
+  LOGIN_ACCOUNT,
 } from 'containers/Auth/constants';
 
-// export function saveToken(dataToken) {
-//   return {
-//     type: REQUEST(GET_TOKEN),
-//     dataToken,
-//   };
-// }
 export function registerAccount(data, callBack) {
   return {
     type: REQUEST(REGISTER_ACCOUNT),
+    data,
+    callBack,
+  };
+}
+
+export function loginAccount(data, callBack) {
+  return {
+    type: REQUEST(LOGIN_ACCOUNT),
     data,
     callBack,
   };

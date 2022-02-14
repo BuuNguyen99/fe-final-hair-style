@@ -8,15 +8,10 @@ import {
   GET_PROFILE,
   UPDATE_PROFILE,
   REGISTER_ACCOUNT,
+  LOGIN_ACCOUNT,
 } from 'containers/Auth/constants';
 
 const { API } = ENDPOINT;
-
-// function getTokenApi() {
-//   return Api.getNotAuth(`${API.GET_ACCESS_TOKEN}`, {
-//     withCredentials: true,
-//   });
-// }
 
 function getMyProfileApi() {
   return Api.get(API.GET_MY_PROFILE);
@@ -78,9 +73,29 @@ export function* registerAccount({ data, callBack }) {
   }
 }
 
+function loginAccountApi(data) {
+  return Api.post(API.LOGIN_USER, data);
+}
+
+export function* loginAccount({ data, callBack }) {
+  const dataPost = {
+    ...data,
+  };
+  try {
+    const response = yield call(loginAccountApi, dataPost);
+    CookiesStorage.setAccessToken(response.data.accessToken);
+    yield put({ type: SUCCESS(LOGIN_ACCOUNT), payload: response.data });
+    callBack();
+  } catch (error) {
+    callBack(error);
+    yield put({ type: FAILURE(LOGIN_ACCOUNT), error });
+  }
+}
+
 export default function* authData() {
   yield takeLatest(REQUEST(REMOVE_TOKEN), signOut);
   yield takeLatest(REQUEST(GET_PROFILE), getMyProfile);
   yield takeLatest(REQUEST(UPDATE_PROFILE), updateProfile);
   yield takeLatest(REQUEST(REGISTER_ACCOUNT), registerAccount);
+  yield takeLatest(REQUEST(LOGIN_ACCOUNT), loginAccount);
 }
