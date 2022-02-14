@@ -1,15 +1,22 @@
 import { REQUEST } from 'utils/actionType';
 import {
-  GET_TOKEN,
   REMOVE_TOKEN,
   GET_PROFILE,
   UPDATE_PROFILE,
+  REGISTER_ACCOUNT,
 } from 'containers/Auth/constants';
 
-export function saveToken(dataToken) {
+// export function saveToken(dataToken) {
+//   return {
+//     type: REQUEST(GET_TOKEN),
+//     dataToken,
+//   };
+// }
+export function registerAccount(data, callBack) {
   return {
-    type: REQUEST(GET_TOKEN),
-    dataToken,
+    type: REQUEST(REGISTER_ACCOUNT),
+    data,
+    callBack,
   };
 }
 

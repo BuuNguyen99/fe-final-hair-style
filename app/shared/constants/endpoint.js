@@ -1,5 +1,7 @@
 export const ENDPOINT = {
-  API: {},
+  API: {
+    REGISTER_USER: '/api/auth/signup',
+  },
   ROUTING: {
     AUTH: '/auth',
     SIGNUP: '/auth/register',

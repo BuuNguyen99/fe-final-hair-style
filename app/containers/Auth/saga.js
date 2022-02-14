@@ -4,19 +4,19 @@ import { CookiesStorage } from 'shared/configs/cookie';
 import { ENDPOINT } from 'shared/constants/endpoint';
 import Api from 'shared/configs/api';
 import {
-  GET_TOKEN,
   REMOVE_TOKEN,
   GET_PROFILE,
   UPDATE_PROFILE,
+  REGISTER_ACCOUNT,
 } from 'containers/Auth/constants';
 
 const { API } = ENDPOINT;
 
-function getTokenApi() {
-  return Api.getNotAuth(`${API.GET_ACCESS_TOKEN}`, {
-    withCredentials: true,
-  });
-}
+// function getTokenApi() {
+//   return Api.getNotAuth(`${API.GET_ACCESS_TOKEN}`, {
+//     withCredentials: true,
+//   });
+// }
 
 function getMyProfileApi() {
   return Api.get(API.GET_MY_PROFILE);
@@ -24,17 +24,6 @@ function getMyProfileApi() {
 
 function updateMyProfileApi(data) {
   return Api.patch(API.UPDATE_MY_PROFILE, data);
-}
-
-export function* getToken() {
-  try {
-    const response = yield call(getTokenApi);
-    const { data } = response;
-    CookiesStorage.setAccessToken(data.accessToken);
-    yield put({ type: SUCCESS(GET_TOKEN), payload: data });
-  } catch (error) {
-    yield put({ type: FAILURE(GET_TOKEN), error });
-  }
 }
 
 export function* signOut() {
@@ -71,9 +60,27 @@ export function* updateProfile({ dataProfile, callBack }) {
   }
 }
 
+function registerAccountApi(data) {
+  return Api.post(API.REGISTER_USER, data);
+}
+
+export function* registerAccount({ data, callBack }) {
+  const dataPost = {
+    ...data,
+  };
+  try {
+    yield call(registerAccountApi, dataPost);
+    yield put({ type: SUCCESS(REGISTER_ACCOUNT), payload: data });
+    callBack();
+  } catch (error) {
+    callBack(error);
+    yield put({ type: FAILURE(REGISTER_ACCOUNT), error });
+  }
+}
+
 export default function* authData() {
-  yield takeLatest(REQUEST(GET_TOKEN), getToken);
   yield takeLatest(REQUEST(REMOVE_TOKEN), signOut);
   yield takeLatest(REQUEST(GET_PROFILE), getMyProfile);
   yield takeLatest(REQUEST(UPDATE_PROFILE), updateProfile);
+  yield takeLatest(REQUEST(REGISTER_ACCOUNT), registerAccount);
 }

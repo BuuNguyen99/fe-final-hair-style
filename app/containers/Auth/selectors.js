@@ -3,11 +3,11 @@ import { initialState } from 'containers/Auth/reducer';
 
 const selectAuth = state => state.auth || initialState;
 
-const makeSelectAccessToken = () =>
-  createSelector(
-    selectAuth,
-    authState => authState.accessToken,
-  );
+// const makeSelectAccessToken = () =>
+//   createSelector(
+//     selectAuth,
+//     authState => authState.accessToken,
+//   );
 
 const makeSelectMyProfile = () =>
   createSelector(
@@ -21,9 +21,16 @@ const makeSelectUpdateMyProfile = () =>
     authState => authState.updateProfile,
   );
 
+const makeSelectRegisterAccount = () =>
+  createSelector(
+    selectAuth,
+    authState => authState.registerAccount,
+  );
+
 export {
   selectAuth,
-  makeSelectAccessToken,
+  // makeSelectAccessToken,
   makeSelectMyProfile,
+  makeSelectRegisterAccount,
   makeSelectUpdateMyProfile,
 };

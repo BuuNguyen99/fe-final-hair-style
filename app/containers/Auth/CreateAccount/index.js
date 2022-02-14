@@ -1,14 +1,34 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import React from 'react';
+import * as Yup from 'yup';
+import React, { memo } from 'react';
 import { Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import * as Yup from 'yup';
+import { createStructuredSelector } from 'reselect';
+import { useInjectReducer } from 'utils/injectReducer';
+import { useInjectSaga } from 'utils/injectSaga';
+import saga from 'containers/Auth/saga';
+import reducer from 'containers/Auth/reducer';
+import { compose } from 'redux';
+import { connect } from 'react-redux';
+import { registerAccount } from 'containers/Auth/actions';
+import { makeSelectRegisterAccount } from 'containers/Auth/selectors';
+import { Spinner } from 'reactstrap';
+import { toast } from 'react-toastify';
 
-export function Registration() {
+const key = 'auth';
+
+function Registration({ dataRegisterAccount, onRegisterAccount }) {
+  useInjectReducer({ key, reducer });
+  useInjectSaga({ key, saga });
+
   const validationSchema = Yup.object().shape({
     firstname: Yup.string().required('First Name is required'),
     lastname: Yup.string().required('Last Name is required'),
+    username: Yup.string()
+      .required('Username is required')
+      .min(6, 'Username must be at least 6 characters')
+      .max(20, 'Username must not exceed 20 characters'),
     email: Yup.string()
       .required('Email is required')
       .email('Email is invalid'),
@@ -16,12 +36,13 @@ export function Registration() {
       .required('Password is required')
       .min(6, 'Password must be at least 6 characters')
       .max(40, 'Password must not exceed 40 characters'),
-    confirmPassword: Yup.string()
+    confirmedPassword: Yup.string()
       .required('Confirm Password is required')
       .oneOf([Yup.ref('password'), null], 'Confirm Password does not match'),
   });
 
   const onSubmit = data => {
+    onRegisterAccount(data, registerAccountCallBack);
     console.log(JSON.stringify(data, null, 2));
   };
 
@@ -33,6 +54,17 @@ export function Registration() {
     resolver: yupResolver(validationSchema),
   });
 
+  const registerAccountCallBack = error => {
+    if (error?.status === 400) {
+      toast.error('This account is already registered');
+      return;
+    }
+    if (error) {
+      toast.error('Account registration failed');
+      return;
+    }
+    toast.success('Successful account registration, Please verify in email');
+  };
   return (
     <form
       className="form w-100 fv-plugins-bootstrap5 fv-plugins-framework"
@@ -61,7 +93,7 @@ export function Registration() {
         <div className="border-bottom border-gray-300 mw-50 w-100" />
       </div>
 
-      <div className="row fv-row">
+      <div className="mb-4 row fv-row">
         <div className="col-xl-6">
           <label className="form-label fw-bolder text-dark fs-6 required">
             First name
@@ -89,24 +121,40 @@ export function Registration() {
               className={`form-control ${errors.lastname ? 'is-invalid' : ''}`}
               autoComplete="off"
             />
+            <div className="invalid-feedback">{errors.lastname?.message}</div>
           </div>
-          <div className="invalid-feedback">{errors.lastname?.message}</div>
         </div>
       </div>
 
-      <div className="fv-row mb-4">
-        <label className="form-label fw-bolder text-dark fs-6 required">
-          Email
-        </label>
-        <input
-          placeholder="Email"
-          type="email"
-          autoComplete="off"
-          name="email"
-          {...register('email')}
-          className={`form-control ${errors.email ? 'is-invalid' : ''}`}
-        />
-        <div className="invalid-feedback">{errors.email?.message}</div>
+      <div className="mb-4 row fv-row">
+        <div className="col-xl-6">
+          <label className="form-label fw-bolder text-dark fs-6 required">
+            Username
+          </label>
+          <input
+            placeholder="Username"
+            name="username"
+            type="text"
+            {...register('username')}
+            className={`form-control ${errors.username ? 'is-invalid' : ''}`}
+            autoComplete="off"
+          />
+          <div className="invalid-feedback">{errors.username?.message}</div>
+        </div>
+        <div className="col-xl-6">
+          <label className="form-label fw-bolder text-dark fs-6 required">
+            Email
+          </label>
+          <input
+            placeholder="Email"
+            type="email"
+            autoComplete="off"
+            name="email"
+            {...register('email')}
+            className={`form-control ${errors.email ? 'is-invalid' : ''}`}
+          />
+          <div className="invalid-feedback">{errors.email?.message}</div>
+        </div>
       </div>
 
       <div className="mb-4 fv-row" data-kt-password-meter="true">
@@ -132,17 +180,17 @@ export function Registration() {
         </label>
         <input
           type="password"
-          name="confirmPassword"
+          name="confirmedPassword"
           placeholder="Password confirmation"
           autoComplete="off"
-          {...register('confirmPassword')}
+          {...register('confirmedPassword')}
           className={`form-control ${
-            errors.confirmPassword ? 'is-invalid' : ''
+            errors.confirmedPassword ? 'is-invalid' : ''
           }`}
         />
 
         <div className="invalid-feedback">
-          {errors.confirmPassword?.message}
+          {errors.confirmedPassword?.message}
         </div>
       </div>
 
@@ -150,9 +198,17 @@ export function Registration() {
         <button
           type="submit"
           id="kt_sign_up_submit"
-          className="btn btn-lg btn-primary w-100 mb-5"
+          className={`btn btn-lg btn-primary w-100 mb-5 ${dataRegisterAccount?.isFetching &&
+            'disabled'}`}
         >
-          <span className="indicator-label">Submit</span>
+          <span className="indicator-label">
+            {dataRegisterAccount?.isFetching && (
+              <Spinner color="light" size="sm">
+                Loading...
+              </Spinner>
+            )}{' '}
+            Submit
+          </span>
         </button>
         <Link to="/auth/login">
           <button
@@ -167,3 +223,24 @@ export function Registration() {
     </form>
   );
 }
+
+const mapStateToProps = createStructuredSelector({
+  dataRegisterAccount: makeSelectRegisterAccount(),
+});
+
+function mapDispatchToProps(dispatch) {
+  return {
+    onRegisterAccount: (data, callback) =>
+      dispatch(registerAccount(data, callback)),
+  };
+}
+
+const withConnect = connect(
+  mapStateToProps,
+  mapDispatchToProps,
+);
+
+export default compose(
+  withConnect,
+  memo,
+)(Registration);

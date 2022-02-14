@@ -1,4 +1,4 @@
-export const GET_TOKEN = 'evaluationSystem/Auth/GET_TOKEN';
-export const REMOVE_TOKEN = 'evaluationSystem/Auth/REMOVE_TOKEN';
-export const GET_PROFILE = 'evaluationSystem/Auth/GET_PROFILE';
-export const UPDATE_PROFILE = 'evaluationSystem/Auth/UPDATE_PROFILE';
+export const REGISTER_ACCOUNT = 'hairstyle/Auth/REGISTER_ACCOUNT';
+export const REMOVE_TOKEN = 'hairstyle/Auth/REMOVE_TOKEN';
+export const GET_PROFILE = 'hairstyle/Auth/GET_PROFILE';
+export const UPDATE_PROFILE = 'hairstyle/Auth/UPDATE_PROFILE';

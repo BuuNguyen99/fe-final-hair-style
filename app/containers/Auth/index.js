@@ -3,7 +3,7 @@ import { Redirect, Route, Switch } from 'react-router-dom';
 import logo from 'assets/images/logo.png';
 import background from 'assets/images/14.png';
 import { Login } from 'containers/Auth/SignIn';
-import { Registration } from 'containers/Auth/CreateAccount';
+import Registration from 'containers/Auth/CreateAccount';
 import { ForgotPasswordAccount } from 'containers/Auth/ForgotPasswordAccount';
 
 function Auth() {

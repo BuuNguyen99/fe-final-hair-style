@@ -1,16 +1,13 @@
 import produce from 'immer';
 import { REQUEST, SUCCESS, FAILURE } from 'utils/actionType';
 import {
-  GET_TOKEN,
   REMOVE_TOKEN,
   GET_PROFILE,
+  REGISTER_ACCOUNT,
   UPDATE_PROFILE,
 } from 'containers/Auth/constants';
 
 export const initialState = {
-  accessToken: '',
-  fetching: false,
-  error: null,
   dataProfile: {
     isFetching: false,
     profile: '',
@@ -18,21 +15,23 @@ export const initialState = {
   updateProfile: {
     isFetching: false,
   },
+  registerAccount: {
+    data: null,
+    isFetching: false,
+  },
 };
 
 const authReducer = (state = initialState, action) =>
   produce(state, draft => {
     switch (action.type) {
-      case REQUEST(GET_TOKEN):
-        draft.fetching = true;
+      case REQUEST(REGISTER_ACCOUNT):
+        draft.registerAccount.isFetching = true;
         break;
-      case SUCCESS(GET_TOKEN):
-        draft.accessToken = action.payload.accessToken;
-        draft.fetching = false;
+      case SUCCESS(REGISTER_ACCOUNT):
+        draft.registerAccount.isFetching = false;
         break;
-      case FAILURE(GET_TOKEN):
-        draft.fetching = false;
-        draft.error = action.error;
+      case FAILURE(REGISTER_ACCOUNT):
+        draft.registerAccount.isFetching = false;
         break;
       case REQUEST(REMOVE_TOKEN):
         draft.fetching = true;
@@ -43,7 +42,6 @@ const authReducer = (state = initialState, action) =>
         break;
       case FAILURE(REMOVE_TOKEN):
         draft.fetching = false;
-        draft.error = action.error;
         break;
       case REQUEST(GET_PROFILE):
         draft.dataProfile.isFetching = true;
