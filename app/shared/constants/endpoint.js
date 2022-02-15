@@ -3,6 +3,7 @@ export const ENDPOINT = {
     REGISTER_USER: '/api/auth/signup',
     LOGIN_USER: '/api/auth/login',
     FORGOT_PASSWORD: '/api/auth/password/forget',
+    RESET_PASSWORD_USER: '/api/auth/password/recovery',
   },
   ROUTING: {
     AUTH: '/auth',

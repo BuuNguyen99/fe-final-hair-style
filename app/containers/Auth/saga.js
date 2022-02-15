@@ -10,6 +10,7 @@ import {
   REGISTER_ACCOUNT,
   LOGIN_ACCOUNT,
   FORGOT_PASSWORD_ACCOUNT,
+  RESET_PASSWORD,
 } from 'containers/Auth/constants';
 
 const { API } = ENDPOINT;
@@ -115,6 +116,32 @@ export function* forgotPasswordAccount({ data }) {
   }
 }
 
+function resetPasswordApi(query, data) {
+  return Api.post(API.RESET_PASSWORD_USER, data, {
+    params: {
+      ...query,
+    },
+  });
+}
+
+export function* resetPassword({ data, callBack }) {
+  const query = {
+    code: data.code,
+  };
+  const dataPost = {
+    newPassword: data.newPassword,
+    confirmedPassword: data.confirmedPassword,
+  };
+  try {
+    const response = yield call(resetPasswordApi, query, dataPost);
+    yield put({ type: SUCCESS(RESET_PASSWORD), payload: response.data });
+    callBack();
+  } catch (error) {
+    callBack(error);
+    yield put({ type: FAILURE(RESET_PASSWORD), error });
+  }
+}
+
 export default function* authData() {
   yield takeLatest(REQUEST(REMOVE_TOKEN), signOut);
   yield takeLatest(REQUEST(GET_PROFILE), getMyProfile);
@@ -122,4 +149,5 @@ export default function* authData() {
   yield takeLatest(REQUEST(REGISTER_ACCOUNT), registerAccount);
   yield takeLatest(REQUEST(LOGIN_ACCOUNT), loginAccount);
   yield takeLatest(REQUEST(FORGOT_PASSWORD_ACCOUNT), forgotPasswordAccount);
+  yield takeLatest(REQUEST(RESET_PASSWORD), resetPassword);
 }

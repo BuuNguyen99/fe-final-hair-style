@@ -5,6 +5,7 @@ import background from 'assets/images/14.png';
 import Login from 'containers/Auth/SignIn';
 import Registration from 'containers/Auth/CreateAccount';
 import ForgotPasswordAccount from 'containers/Auth/ForgotPasswordAccount';
+import ResetPassword from 'containers/Auth/ResetPassword';
 
 function Auth() {
   useEffect(() => {
@@ -34,6 +35,7 @@ function Auth() {
               path="/auth/forgot-password"
               component={ForgotPasswordAccount}
             />
+            <Route path="/auth/reset-password" component={ResetPassword} />
             <Redirect from="/auth" exact to="/auth/login" />
             <Redirect to="/auth/login" />
           </Switch>

@@ -6,6 +6,7 @@ import {
   REGISTER_ACCOUNT,
   LOGIN_ACCOUNT,
   FORGOT_PASSWORD_ACCOUNT,
+  RESET_PASSWORD,
 } from 'containers/Auth/constants';
 
 export function registerAccount(data, callBack) {
@@ -27,6 +28,14 @@ export function forgotPassword(data) {
   return {
     type: REQUEST(FORGOT_PASSWORD_ACCOUNT),
     data,
+  };
+}
+
+export function resetPassword(data, callBack) {
+  return {
+    type: REQUEST(RESET_PASSWORD),
+    data,
+    callBack,
   };
 }
 

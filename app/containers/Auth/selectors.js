@@ -32,6 +32,13 @@ const makeSelectForgotPasswordAccount = () =>
     selectAuth,
     authState => authState.forgotPassword,
   );
+
+const makeSelectResetPasswordAccount = () =>
+  createSelector(
+    selectAuth,
+    authState => authState.resetPassword,
+  );
+
 export {
   selectAuth,
   makeSelectMyProfile,
@@ -39,4 +46,5 @@ export {
   makeSelectUpdateMyProfile,
   makeSelectLoginAccount,
   makeSelectForgotPasswordAccount,
+  makeSelectResetPasswordAccount,
 };

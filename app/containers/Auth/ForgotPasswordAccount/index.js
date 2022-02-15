@@ -38,7 +38,6 @@ function ForgotPasswordAccount({
     setEmail(data.email);
     setIsShowNoti(true);
     onForgotPasswordAccount(data);
-    setValue('email', '');
   };
 
   const handleCloseNoti = () => {
@@ -48,7 +47,6 @@ function ForgotPasswordAccount({
   const {
     register,
     handleSubmit,
-    setValue,
     formState: { errors },
   } = useForm({
     resolver: yupResolver(validationSchema),
