@@ -6,6 +6,7 @@ import {
   REGISTER_ACCOUNT,
   UPDATE_PROFILE,
   LOGIN_ACCOUNT,
+  FORGOT_PASSWORD_ACCOUNT,
 } from 'containers/Auth/constants';
 
 export const initialState = {
@@ -21,6 +22,9 @@ export const initialState = {
   },
   registerAccount: {
     data: null,
+    isFetching: false,
+  },
+  forgotPassword: {
     isFetching: false,
   },
 };
@@ -45,6 +49,15 @@ const authReducer = (state = initialState, action) =>
         break;
       case FAILURE(LOGIN_ACCOUNT):
         draft.dataUser.isFetching = false;
+        break;
+      case REQUEST(FORGOT_PASSWORD_ACCOUNT):
+        draft.forgotPassword.isFetching = true;
+        break;
+      case SUCCESS(FORGOT_PASSWORD_ACCOUNT):
+        draft.forgotPassword.isFetching = false;
+        break;
+      case FAILURE(FORGOT_PASSWORD_ACCOUNT):
+        draft.forgotPassword.isFetching = false;
         break;
       case REQUEST(REMOVE_TOKEN):
         draft.fetching = true;

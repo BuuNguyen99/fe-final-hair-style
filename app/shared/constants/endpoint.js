@@ -2,6 +2,7 @@ export const ENDPOINT = {
   API: {
     REGISTER_USER: '/api/auth/signup',
     LOGIN_USER: '/api/auth/login',
+    FORGOT_PASSWORD: '/api/auth/password/forget',
   },
   ROUTING: {
     AUTH: '/auth',

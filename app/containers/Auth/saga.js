@@ -9,6 +9,7 @@ import {
   UPDATE_PROFILE,
   REGISTER_ACCOUNT,
   LOGIN_ACCOUNT,
+  FORGOT_PASSWORD_ACCOUNT,
 } from 'containers/Auth/constants';
 
 const { API } = ENDPOINT;
@@ -92,10 +93,33 @@ export function* loginAccount({ data, callBack }) {
   }
 }
 
+function forgotPasswordApi(query) {
+  return Api.get(API.FORGOT_PASSWORD, {
+    params: {
+      ...query,
+    },
+  });
+}
+
+export function* forgotPasswordAccount({ data }) {
+  const dataPost = {
+    ...data,
+  };
+  try {
+    yield call(forgotPasswordApi, dataPost);
+    yield put({
+      type: SUCCESS(FORGOT_PASSWORD_ACCOUNT),
+    });
+  } catch (error) {
+    yield put({ type: FAILURE(FORGOT_PASSWORD_ACCOUNT), error });
+  }
+}
+
 export default function* authData() {
   yield takeLatest(REQUEST(REMOVE_TOKEN), signOut);
   yield takeLatest(REQUEST(GET_PROFILE), getMyProfile);
   yield takeLatest(REQUEST(UPDATE_PROFILE), updateProfile);
   yield takeLatest(REQUEST(REGISTER_ACCOUNT), registerAccount);
   yield takeLatest(REQUEST(LOGIN_ACCOUNT), loginAccount);
+  yield takeLatest(REQUEST(FORGOT_PASSWORD_ACCOUNT), forgotPasswordAccount);
 }

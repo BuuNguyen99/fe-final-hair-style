@@ -26,10 +26,17 @@ const makeSelectLoginAccount = () =>
     selectAuth,
     authState => authState.dataUser,
   );
+
+const makeSelectForgotPasswordAccount = () =>
+  createSelector(
+    selectAuth,
+    authState => authState.forgotPassword,
+  );
 export {
   selectAuth,
   makeSelectMyProfile,
   makeSelectRegisterAccount,
   makeSelectUpdateMyProfile,
   makeSelectLoginAccount,
+  makeSelectForgotPasswordAccount,
 };
