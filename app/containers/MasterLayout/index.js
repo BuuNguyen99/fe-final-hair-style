@@ -4,6 +4,7 @@ import Header from 'components/Header';
 import AsideMenu from 'components/AsideMenu';
 import { Switch, Route } from 'react-router-dom';
 import HomePage from 'containers/HomePage';
+import MyProfile from 'containers/MyProfile';
 
 export default function MasterLayout() {
   return (
@@ -18,6 +19,7 @@ export default function MasterLayout() {
           <Header />
           <Switch>
             <Route path="/" component={HomePage} exact />
+            <Route path="/my-profile" component={MyProfile} exact />
           </Switch>
         </div>
       </div>

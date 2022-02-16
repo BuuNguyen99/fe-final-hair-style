@@ -18,7 +18,6 @@ export const ENDPOINT = {
     LOGOUT: '/auth/logout',
     HOME: '/',
     MY_PROFILE: '/my-profile',
-    EDIT_MY_PROFILE: '/edit-my-profile',
     ERROR: '/error',
     ERROR_404: '/error/404',
   },

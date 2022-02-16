@@ -134,14 +134,9 @@ function Header() {
                   className={`menu ${isActive ? 'active' : 'inactive'}`}
                 >
                   <ul>
-                    {!isAuthen && (
-                      <li>
-                        <Link to="auth/login">Login</Link>
-                      </li>
-                    )}
                     {isAuthen && (
                       <li>
-                        <Link to="1">My Profile</Link>
+                        <Link to="/my-profile">My Profile</Link>
                       </li>
                     )}
                     {isAuthen && (

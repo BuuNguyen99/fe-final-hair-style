@@ -1,19 +1,7 @@
-import { compose } from 'redux';
-import React, { memo } from 'react';
-import { connect } from 'react-redux';
-import { createStructuredSelector } from 'reselect';
-import { makeSelectMyProfile } from 'containers/Auth/selectors';
+import React from 'react';
 
 function MyProfile() {
-  return <div className="my-profile">11</div>;
+  return <div>Home</div>;
 }
-const mapStateToProps = createStructuredSelector({
-  dataProfile: makeSelectMyProfile(),
-});
 
-const withConnect = connect(mapStateToProps);
-
-export default compose(
-  withConnect,
-  memo,
-)(MyProfile);
+export default MyProfile;
