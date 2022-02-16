@@ -10,6 +10,7 @@ import {
   REGISTER_ACCOUNT,
   LOGIN_ACCOUNT,
   FORGOT_PASSWORD_ACCOUNT,
+  CHANGE_PASSWORD,
   RESET_PASSWORD,
 } from 'containers/Auth/constants';
 
@@ -142,6 +143,21 @@ export function* resetPassword({ data, callBack }) {
   }
 }
 
+function changePasswordApi(data) {
+  return Api.post(API.CHANGE_PASSWORD_USER, data);
+}
+
+export function* changePasswordAccount({ data, callBack }) {
+  try {
+    yield call(changePasswordApi, data);
+    yield put({ type: SUCCESS(CHANGE_PASSWORD), payload: data });
+    callBack?.();
+  } catch (error) {
+    callBack?.(error);
+    yield put({ type: FAILURE(CHANGE_PASSWORD), error });
+  }
+}
+
 export default function* authData() {
   yield takeLatest(REQUEST(REMOVE_TOKEN), signOut);
   yield takeLatest(REQUEST(GET_PROFILE), getMyProfile);
@@ -150,4 +166,5 @@ export default function* authData() {
   yield takeLatest(REQUEST(LOGIN_ACCOUNT), loginAccount);
   yield takeLatest(REQUEST(FORGOT_PASSWORD_ACCOUNT), forgotPasswordAccount);
   yield takeLatest(REQUEST(RESET_PASSWORD), resetPassword);
+  yield takeLatest(REQUEST(CHANGE_PASSWORD), changePasswordAccount);
 }

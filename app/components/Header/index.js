@@ -1,12 +1,23 @@
 import { Popover, Button } from 'antd';
-import React, { useRef } from 'react';
+import React, { memo, useRef, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { BsCart2 } from 'react-icons/bs';
 import { AiOutlineUser } from 'react-icons/ai';
-import { useDetectOutsideClick } from './useDetectOutsideClick';
+import { useInjectSaga } from 'utils/injectSaga';
+import { useInjectReducer } from 'utils/injectReducer';
+import saga from 'containers/Auth/saga';
+import reducer from 'containers/Auth/reducer';
+import { createStructuredSelector } from 'reselect';
+import { connect } from 'react-redux';
+import { compose } from 'redux';
+import { makeSelectMyProfile } from 'containers/Auth/selectors';
+import { getProfile } from 'containers/Auth/actions';
 import { CookiesStorage } from '../../shared/configs/cookie';
+import { useDetectOutsideClick } from './useDetectOutsideClick';
 
-function Header() {
+const key = 'auth';
+
+function Header({ onGetMyProfile }) {
   const dropdownRef = useRef(null);
   const isAuthen = CookiesStorage.authenticated();
 
@@ -15,10 +26,17 @@ function Header() {
     setIsActive(!isActive);
   };
 
+  useInjectReducer({ key, reducer });
+  useInjectSaga({ key, saga });
+
   const logout = () => {
     window.location.reload();
     CookiesStorage.clearData();
   };
+
+  useEffect(() => {
+    onGetMyProfile();
+  }, []);
 
   const content = (
     <div className="products-list">
@@ -157,4 +175,22 @@ function Header() {
   );
 }
 
-export default Header;
+const mapStateToProps = createStructuredSelector({
+  dataProfile: makeSelectMyProfile(),
+});
+
+export function mapDispatchToProps(dispatch) {
+  return {
+    onGetMyProfile: () => dispatch(getProfile()),
+  };
+}
+
+const withConnect = connect(
+  mapStateToProps,
+  mapDispatchToProps,
+);
+
+export default compose(
+  withConnect,
+  memo,
+)(Header);

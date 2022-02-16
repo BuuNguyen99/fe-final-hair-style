@@ -4,6 +4,9 @@ export const ENDPOINT = {
     LOGIN_USER: '/api/auth/login',
     FORGOT_PASSWORD: '/api/auth/password/forget',
     RESET_PASSWORD_USER: '/api/auth/password/recovery',
+    GET_MY_PROFILE: '/api/profile/get',
+    UPDATE_MY_PROFILE: '/api/profile/update',
+    CHANGE_PASSWORD_USER: '/api/auth/password/change',
   },
   ROUTING: {
     AUTH: '/auth',
