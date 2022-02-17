@@ -10,11 +10,17 @@ import {
   makeSelectMyProfile,
   makeSelectUpdateMyProfile,
   makeSelectChangePasswordAccount,
+  makeSelectAddProduct,
 } from 'containers/Auth/selectors';
-import { updateProfile, changePasswordAccount } from 'containers/Auth/actions';
+import {
+  updateProfile,
+  changePasswordAccount,
+  addProductItem,
+} from 'containers/Auth/actions';
 import avatarDefault from 'assets/images/avatarDefault.png';
 import ChangeInfo from './ChangeInfo';
 import ChangePassword from './ChangePassword';
+import ProductManagement from './ProductManagement';
 
 const { TabPane } = Tabs;
 
@@ -24,6 +30,8 @@ function MyProfile({
   onUpdateProfile,
   dataChangePassword,
   onChangePasswordAccount,
+  dataAddProduct,
+  onAddProductItem,
 }) {
   const history = useHistory();
   return (
@@ -131,6 +139,12 @@ function MyProfile({
             <TabPane tab="My Vouchers" key="4">
               There&apos;s nothing here
             </TabPane>
+            <TabPane tab="Product Management" key="5">
+              <ProductManagement
+                dataAddProduct={dataAddProduct}
+                onAddProductItem={onAddProductItem}
+              />
+            </TabPane>
           </Tabs>
         </div>
       </div>
@@ -140,6 +154,7 @@ function MyProfile({
 const mapStateToProps = createStructuredSelector({
   dataProfile: makeSelectMyProfile(),
   dataUpdateProfile: makeSelectUpdateMyProfile(),
+  dataAddProduct: makeSelectAddProduct(),
   dataChangePassword: makeSelectChangePasswordAccount(),
 });
 
@@ -149,6 +164,8 @@ function mapDispatchToProps(dispatch) {
       dispatch(updateProfile(data, callBack)),
     onChangePasswordAccount: (data, callBack) =>
       dispatch(changePasswordAccount(data, callBack)),
+    onAddProductItem: (data, callBack) =>
+      dispatch(addProductItem(data, callBack)),
   };
 }
 

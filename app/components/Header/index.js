@@ -133,12 +133,12 @@ function Header({ onGetMyProfile }) {
         <div className="header__menu-icon">
           <ul className="icon-list">
             <li className="icon-item">
-              <a href="#" className="icon-link">
+              <p className="icon-link">
                 <Popover placement="bottomRight" content={content}>
                   <BsCart2 className="icon icon-user" />
                   {isAuthen && <span className="mark">3</span>}
                 </Popover>
-              </a>
+              </p>
             </li>
             <li className="icon-item">
               <a

@@ -11,6 +11,7 @@ import {
   LOGIN_ACCOUNT,
   FORGOT_PASSWORD_ACCOUNT,
   CHANGE_PASSWORD,
+  ADD_PRODUCT_ACTION,
   RESET_PASSWORD,
 } from 'containers/Auth/constants';
 
@@ -158,6 +159,21 @@ export function* changePasswordAccount({ data, callBack }) {
   }
 }
 
+function addProductApi(data) {
+  return Api.post(API.ADD_PRODUCT_API, data);
+}
+
+export function* addProductItem({ data, callBack }) {
+  try {
+    yield call(addProductApi, data);
+    yield put({ type: SUCCESS(ADD_PRODUCT_ACTION), payload: data });
+    callBack?.();
+  } catch (error) {
+    callBack?.(error);
+    yield put({ type: FAILURE(ADD_PRODUCT_ACTION), error });
+  }
+}
+
 export default function* authData() {
   yield takeLatest(REQUEST(REMOVE_TOKEN), signOut);
   yield takeLatest(REQUEST(GET_PROFILE), getMyProfile);
@@ -167,4 +183,5 @@ export default function* authData() {
   yield takeLatest(REQUEST(FORGOT_PASSWORD_ACCOUNT), forgotPasswordAccount);
   yield takeLatest(REQUEST(RESET_PASSWORD), resetPassword);
   yield takeLatest(REQUEST(CHANGE_PASSWORD), changePasswordAccount);
+  yield takeLatest(REQUEST(ADD_PRODUCT_ACTION), addProductItem);
 }

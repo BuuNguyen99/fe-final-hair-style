@@ -127,7 +127,7 @@
     }
   }
   .tabs-profile {
-    min-height: 400px;
+    height: 650px;
   }
 }
 
@@ -141,8 +141,9 @@
 }
 
 .ant-select-selector {
+  display: flex !important;
+  align-items: center !important;
   height: 43.5px !important;
-  display: block !important;
   width: 100% !important;
   padding: 0.75rem 1rem !important;
   font-size: 1.1rem !important;
@@ -164,4 +165,59 @@
 .ant-select-focused:not(.ant-select-disabled).ant-select:not(.ant-select-customize-input)
   .ant-select-selector {
   box-shadow: none !important;
+}
+
+.product-management {
+  &__filter {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  &__table {
+    .ant-select-selector {
+      height: 32px !important;
+    }
+    .ant-pagination-item-link {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+  .add-product {
+    display: flex;
+    align-items: center;
+    span {
+      font-size: 13px;
+      font-weight: 600;
+    }
+  }
+  .input-group-text {
+    border-top-left-radius: 0.65rem;
+    border-bottom-left-radius: 0.65rem;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+  .ant-btn {
+    display: flex;
+    align-items: center;
+  }
+  .ql-editor {
+    background-color: #fff;
+    min-height: 18em;
+  }
+  .price-input {
+    border-top-right-radius: 0.65rem !important;
+    border-bottom-right-radius: 0.65rem !important;
+  }
+  .category-error {
+    margin-top: 0;
+    width: 100%;
+    font-size: 0.925rem;
+    color: #f1416c;
+  }
+  .error {
+    .ant-select-selector {
+      border-color: #f1416c !important;
+    }
+  }
 }

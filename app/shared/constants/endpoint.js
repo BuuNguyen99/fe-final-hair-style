@@ -7,6 +7,7 @@ export const ENDPOINT = {
     GET_MY_PROFILE: '/api/profile/get',
     UPDATE_MY_PROFILE: '/api/profile/update',
     CHANGE_PASSWORD_USER: '/api/auth/password/change',
+    ADD_PRODUCT_API: '/api/product/addProduct',
   },
   ROUTING: {
     AUTH: '/auth',
