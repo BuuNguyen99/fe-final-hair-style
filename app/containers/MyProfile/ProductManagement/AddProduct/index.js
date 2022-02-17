@@ -131,6 +131,7 @@ function AddProduct({ setIsAddProduct, dataAddProduct, onAddProductItem }) {
       return;
     }
     toast.success('Add Product successfully');
+    setIsAddProduct(true);
   };
 
   const handleError = () => {
