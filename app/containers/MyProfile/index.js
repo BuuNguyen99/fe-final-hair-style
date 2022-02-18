@@ -145,6 +145,12 @@ function MyProfile({
                 onAddProductItem={onAddProductItem}
               />
             </TabPane>
+            <TabPane tab="Hair Style Management" key="6">
+              <ProductManagement
+                dataAddProduct={dataAddProduct}
+                onAddProductItem={onAddProductItem}
+              />
+            </TabPane>
           </Tabs>
         </div>
       </div>
