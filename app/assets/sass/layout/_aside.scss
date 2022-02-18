@@ -22,12 +22,34 @@
     list-style-type: none;
     padding: 0;
   }
+  .active-filter {
+    cursor: pointer;
+    background-color: #8a6f53 !important;
+    border-radius: 14px;
+    color: #fff;
+  }
+
   &__item {
-    text-align: center;
+    transition: 0.3s;
+    margin: 5px 0;
+    font-weight: 600;
+    img {
+      width: 50px;
+      height: 40px;
+      margin-right: 5px;
+    }
+    display: flex;
+    align-items: center;
     cursor: pointer;
     font-size: 16px;
     font-weight: 500;
     color: #010101;
     padding: 10px;
+    &:hover {
+      cursor: pointer;
+      background-color: #cca47b !important;
+      border-radius: 14px;
+      color: #fff;
+    }
   }
 }
