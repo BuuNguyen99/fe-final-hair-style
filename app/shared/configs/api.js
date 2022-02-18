@@ -79,7 +79,7 @@ function patchApi(path, data, options = {}) {
   });
 }
 
-function deleteApi(path, options = {}) {
+function deleteApi(path, data, options = {}) {
   return axios.delete(`${API_BASE_URL}/${path.replace(/^\//, '')}`, {
     ...defaultOptions,
     ...options,
@@ -87,6 +87,7 @@ function deleteApi(path, options = {}) {
       ...options.headers,
       ...generateToken(),
     },
+    data,
   });
 }
 
@@ -127,8 +128,8 @@ function handleErrorStatus(error) {
     case 400:
       return error?.response;
     case 401:
-      CookiesStorage.clearData();
-      redirectTo();
+      // CookiesStorage.clearData();
+      // redirectTo();
       return error.response;
     case 403:
       window.location.reload();

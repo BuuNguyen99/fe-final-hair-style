@@ -1,201 +1,92 @@
-import React, { useState } from 'react';
+import React from 'react';
 import 'antd/dist/antd.css';
-import { Table, Input, InputNumber, Popconfirm, Form, Typography } from 'antd';
-const originData = [];
+import { Popconfirm, Table, Typography } from 'antd';
+import { toast } from 'react-toastify';
 
-for (let i = 0; i < 100; i++) {
-  originData.push({
-    key: i.toString(),
-    name: `Edrward ${i}`,
-    quantity: 12,
-    price: '$299',
-    rating: 3,
-    description:
-      'The DJI Mini SE is one of the compact drones with a design almost like the Mavic Mini. The drone is aimed at inexperienced users and beginners. With a weight of less than 250g, you can use the drone in areas where drones are not allowed.',
-    address: `London Park no. ${i}`,
-  });
-}
-
-const TableListProduct = ({
-  editing,
-  dataIndex,
-  title,
-  inputType,
-  record,
-  index,
-  children,
-  ...restProps
-}) => {
-  const inputNode = inputType === 'number' ? <InputNumber /> : <Input />;
-  return (
-    <td {...restProps}>
-      {editing ? (
-        <Form.Item
-          name={dataIndex}
-          style={{
-            margin: 0,
-          }}
-          rules={[
-            {
-              required: true,
-              message: `Please Input ${title}!`,
-            },
-          ]}
-        >
-          {inputNode}
-        </Form.Item>
-      ) : (
-        children
-      )}
-    </td>
-  );
-};
-
-function EditableTable() {
-  const [form] = Form.useForm();
-  const [data, setData] = useState(originData);
-  const [editingKey, setEditingKey] = useState('');
-
-  const isEditing = record => record.key === editingKey;
-
-  const edit = record => {
-    form.setFieldsValue({
-      name: '',
-      age: '',
-      address: '',
-      ...record,
-    });
-    setEditingKey(record.key);
-  };
-
-  const cancel = () => {
-    setEditingKey('');
-  };
-
-  const save = async key => {
-    try {
-      const row = await form.validateFields();
-      const newData = [...data];
-      const index = newData.findIndex(item => key === item.key);
-
-      if (index > -1) {
-        const item = newData[index];
-        newData.splice(index, 1, { ...item, ...row });
-        setData(newData);
-        setEditingKey('');
-      } else {
-        newData.push(row);
-        setData(newData);
-        setEditingKey('');
-      }
-    } catch (errInfo) {
-      // eslint-disable-next-line no-console
-      console.log('Validate Failed:', errInfo);
-    }
-  };
-
+function EditableTable({
+  setPage,
+  setPageSize,
+  pageSizeLimit,
+  dataProduct,
+  onDeleteProductItem,
+}) {
   const columns = [
     {
-      title: `Product's name`,
-      dataIndex: 'name',
+      title: 'Product Name',
+      dataIndex: 'title',
       width: '15%',
-      editable: true,
     },
     {
-      title: 'Price',
+      title: 'Price (VND)',
       dataIndex: 'price',
       width: '10%',
-      editable: true,
     },
     {
       title: 'Rating',
-      dataIndex: 'rating',
+      dataIndex: 'averageRating',
       width: '5%',
-      editable: true,
     },
     {
-      title: 'quantity',
+      title: 'Quantity',
       dataIndex: 'quantity',
       width: '5%',
-      editable: true,
     },
     {
-      title: 'Description',
-      dataIndex: 'description',
-      width: '40%',
-      editable: true,
+      title: 'Category',
+      dataIndex: 'category',
+      width: '10%',
+    },
+    {
+      title: 'Short Description',
+      dataIndex: 'metaTitle',
+      width: '23%',
     },
     {
       title: '',
-      dataIndex: 'operation',
-      width: '10%',
-      render: (_, record) => {
-        const editable = isEditing(record);
-        return editable ? (
-          <span>
-            <Typography.Link
-              onClick={() => save(record.key)}
-              style={{
-                marginRight: 8,
-              }}
-            >
-              Save
-            </Typography.Link>
-            <Popconfirm title="Sure to cancel?" onConfirm={cancel}>
-              <a>Cancel</a>
-            </Popconfirm>
-          </span>
-        ) : (
-          <>
-            <Typography.Link
-              disabled={editingKey !== ''}
-              onClick={() => edit(record)}
-            >
-              Edit
-            </Typography.Link>
-            <Typography.Link>
-              <Popconfirm title="Sure to delete?" onConfirm={cancel}>
-                <a className="mx-2">Delete</a>
-              </Popconfirm>
-            </Typography.Link>
-          </>
-        );
-      },
+      dataIndex: 'id',
+      key: 'x',
+      width: '8%',
+      render: (_, record) => (
+        <>
+          <Typography.Link>Edit</Typography.Link>
+          <Popconfirm
+            className="mx-3"
+            title="Sure to Delete?"
+            onConfirm={() => handleDelete(record.id)}
+          >
+            <Typography.Link>Delete</Typography.Link>
+          </Popconfirm>
+        </>
+      ),
     },
   ];
-  const mergedColumns = columns.map(col => {
-    if (!col.editable) {
-      return col;
-    }
 
-    return {
-      ...col,
-      onCell: record => ({
-        record,
-        inputType: col.dataIndex === 'age' ? 'number' : 'text',
-        dataIndex: col.dataIndex,
-        title: col.title,
-        editing: isEditing(record),
-      }),
-    };
-  });
+  const handleDelete = id => {
+    const idArray = [id];
+    onDeleteProductItem(idArray, handleCallBackDelete);
+  };
+
+  const handleCallBackDelete = error => {
+    if (error) {
+      toast.error('Delete product item failed');
+      return;
+    }
+    toast.success('Delete product item  Successfully');
+  };
+
+  const handleChangeTable = ({ current, pageSize }) => {
+    setPage(current);
+    setPageSize(pageSize);
+  };
+
   return (
-    <Form form={form} component={false}>
-      <Table
-        components={{
-          body: {
-            cell: TableListProduct,
-          },
-        }}
-        bordered
-        dataSource={data}
-        columns={mergedColumns}
-        rowClassName="editable-row"
-        pagination={{
-          onChange: cancel,
-        }}
-      />
-    </Form>
+    <Table
+      onChange={handleChangeTable}
+      columns={columns}
+      dataSource={dataProduct}
+      pagination={{ pageSize: pageSizeLimit }}
+      scroll={{ y: 450 }}
+    />
   );
 }
 

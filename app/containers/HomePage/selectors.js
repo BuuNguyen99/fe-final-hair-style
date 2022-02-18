@@ -1,12 +1,17 @@
 import { createSelector } from 'reselect';
-import { initialState } from 'containers/Auth/reducer';
+import { initialState } from 'containers/HomePage/reducer';
 
-const selectAuth = state => state.home || initialState;
+const selectHomePage = state => state.home || initialState;
 
 const makeSelectDataProduct = () =>
   createSelector(
-    selectAuth,
-    authState => authState.dataProduct,
+    selectHomePage,
+    homeState => homeState.dataProduct,
   );
 
-export { selectAuth, makeSelectDataProduct };
+const makeSelectDeleteProduct = () =>
+  createSelector(
+    selectHomePage,
+    homeState => homeState.deleteProduct,
+  );
+export { selectHomePage, makeSelectDataProduct, makeSelectDeleteProduct };

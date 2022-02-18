@@ -9,6 +9,7 @@ export const ENDPOINT = {
     CHANGE_PASSWORD_USER: '/api/auth/password/change',
     ADD_PRODUCT_API: '/api/product/addProduct',
     GET_LIST_PRODUCT_API: '/api/product/getAll',
+    DELETE_PRODUCT_API: '/api/product/multiDelete',
   },
   ROUTING: {
     AUTH: '/auth',

@@ -139,18 +139,22 @@ function MyProfile({
             <TabPane tab="My Vouchers" key="4">
               There&apos;s nothing here
             </TabPane>
-            <TabPane tab="Product Management" key="5">
-              <ProductManagement
-                dataAddProduct={dataAddProduct}
-                onAddProductItem={onAddProductItem}
-              />
-            </TabPane>
-            <TabPane tab="Hair Style Management" key="6">
-              <ProductManagement
-                dataAddProduct={dataAddProduct}
-                onAddProductItem={onAddProductItem}
-              />
-            </TabPane>
+            {dataProfile?.profile?.account?.roles[0]?.name === 'ADMIN' && (
+              <TabPane tab="Product Management" key="5">
+                <ProductManagement
+                  dataAddProduct={dataAddProduct}
+                  onAddProductItem={onAddProductItem}
+                />
+              </TabPane>
+            )}
+            {dataProfile?.profile?.account?.roles[0]?.name === 'ADMIN' && (
+              <TabPane tab="Hair Style Management" key="6">
+                <ProductManagement
+                  dataAddProduct={dataAddProduct}
+                  onAddProductItem={onAddProductItem}
+                />
+              </TabPane>
+            )}
           </Tabs>
         </div>
       </div>
