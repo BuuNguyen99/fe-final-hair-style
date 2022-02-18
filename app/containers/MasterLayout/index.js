@@ -8,6 +8,7 @@ import MyProfile from 'containers/MyProfile';
 import HairsStyle from 'containers/HairsStyle';
 import GuestServices from 'containers/GuestServices';
 import AboutUs from 'containers/AboutUs';
+import BuyProduct from 'containers/BuyProduct';
 
 export default function MasterLayout() {
   return (
@@ -26,6 +27,7 @@ export default function MasterLayout() {
             <Route path="/hairs-style" component={HairsStyle} exact />
             <Route path="/guest-services" component={GuestServices} exact />
             <Route path="/about-us" component={AboutUs} exact />
+            <Route path="/products/:id" component={BuyProduct} />
             <Redirect from="/" exact to="/products" />
             <Redirect to="/products" />
           </Switch>

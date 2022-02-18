@@ -25,6 +25,7 @@ function PaginationComponent({
         lastPageText={<ChevronsRight />}
         nextPageText={<ChevronRight />}
         activePage={parseInt(activePage, 10)}
+        itemsCountPerPage={12}
         totalItemsCount={pageCount}
         pageRangeDisplayed={5}
         hideDisabled

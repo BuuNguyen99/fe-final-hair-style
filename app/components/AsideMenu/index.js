@@ -1,16 +1,55 @@
-import React, { useState } from 'react';
+import React, { memo, useState, useEffect } from 'react';
 import logo from 'assets/images/logo.png';
 import { Link, useLocation } from 'react-router-dom';
+import { compose } from 'redux';
+import { connect } from 'react-redux';
+import { createStructuredSelector } from 'reselect';
+import { CookiesStorage } from 'shared/configs/cookie';
+import { useInjectReducer } from 'utils/injectReducer';
+import { useInjectSaga } from 'utils/injectSaga';
+import saga from 'containers/HomePage/saga';
+import reducer from 'containers/HomePage/reducer';
+import { makeSelectDataProduct } from '../../containers/HomePage/selectors';
+import { getViewHomeProduct } from '../../containers/HomePage/actions';
 
-function AsideMenu() {
+const key = 'home';
+
+function AsideMenu({ onGetViewHomeProduct }) {
   const { pathname } = useLocation();
   const [filterCategory, setFilterCategory] = useState('');
 
   const checkPathname = pathname.includes('/products');
 
+  useInjectReducer({ key, reducer });
+  useInjectSaga({ key, saga });
+
   const handleFilter = filter => {
+    CookiesStorage.setCookieData('filterCategory', filter);
     setFilterCategory(filter);
   };
+
+  useEffect(() => {
+    const data = {
+      searchFilters: [
+        {
+          property: 'category',
+          operator: 'LIKE',
+          value: filterCategory,
+        },
+      ],
+      sortOrder: {
+        ascendingOrder: [],
+        descendingOrder: [],
+      },
+      joinColumnProps: [],
+    };
+
+    const params = {
+      page: 0,
+      size: 12,
+    };
+    onGetViewHomeProduct(data, params);
+  }, [filterCategory]);
 
   return (
     <div className="aside-menu">
@@ -116,4 +155,23 @@ function AsideMenu() {
   );
 }
 
-export default AsideMenu;
+const mapStateToProps = createStructuredSelector({
+  dataProduct: makeSelectDataProduct(),
+});
+
+function mapDispatchToProps(dispatch) {
+  return {
+    onGetViewHomeProduct: (data, params) =>
+      dispatch(getViewHomeProduct(data, params)),
+  };
+}
+
+const withConnect = connect(
+  mapStateToProps,
+  mapDispatchToProps,
+);
+
+export default compose(
+  withConnect,
+  memo,
+)(AsideMenu);
