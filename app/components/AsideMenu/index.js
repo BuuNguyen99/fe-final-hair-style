@@ -1,8 +1,11 @@
 import React from 'react';
 import logo from 'assets/images/logo.png';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 function AsideMenu() {
+  const { pathname } = useLocation();
+
+  const checkPathname = pathname.includes('/products');
   return (
     <div className="aside-menu">
       <div className="aside-menu__logo">
@@ -10,18 +13,22 @@ function AsideMenu() {
           <img src={logo} alt="logo" />
         </Link>
       </div>
-      <div className="aside-menu__title">
-        <h1>Explore</h1>
-      </div>
-      <ul className="aside-menu__list">
-        <li className="aside-menu__item"> New In</li>
-        <li className="aside-menu__item"> Clothing</li>
-        <li className="aside-menu__item"> Shoes</li>
-        <li className="aside-menu__item"> Accessories</li>
-        <li className="aside-menu__item">Activewear</li>
-        <li className="aside-menu__item">Gifts & Living</li>
-        <li className="aside-menu__item">Inspiration</li>
-      </ul>
+      {checkPathname && (
+        <>
+          <div className="aside-menu__title">
+            <h1>Explore</h1>
+          </div>
+          <ul className="aside-menu__list">
+            <li className="aside-menu__item"> Shop All</li>
+            <li className="aside-menu__item"> Shampoo & Conditioner</li>
+            <li className="aside-menu__item"> Styling Product</li>
+            <li className="aside-menu__item"> Accessories</li>
+            <li className="aside-menu__item">Hair Color</li>
+            <li className="aside-menu__item">Hair Styling Tools</li>
+            <li className="aside-menu__item">Hair Brushes & Combs</li>
+          </ul>
+        </>
+      )}
     </div>
   );
 }

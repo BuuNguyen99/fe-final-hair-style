@@ -142,6 +142,24 @@ function AddProduct({ setIsAddProduct, dataAddProduct, onAddProductItem }) {
     setErrorCategory(true);
   };
 
+  const custom = ({ file, onSuccess }) => {
+    const formData = new FormData();
+    formData.append('file', file);
+    formData.append('upload_preset', 'q4emlfoq');
+
+    axios
+      .post('https://api.cloudinary.com/v1_1/rhy123/image/upload', formData)
+      .then(response => {
+        const { data } = response;
+        setFileImage([...fileImage, data.url]);
+        onSuccess('ok');
+      })
+      .catch(error => {
+        // eslint-disable-next-line no-console
+        console.log(error);
+      });
+  };
+
   return (
     <div className="add-product-page">
       <h2 className="mt-3"> Add Product</h2>
@@ -216,10 +234,16 @@ function AddProduct({ setIsAddProduct, dataAddProduct, onAddProductItem }) {
                 placeholder="Select category"
                 className={` ${errorCategory ? 'error' : ''}`}
               >
-                <Option value="laptop">Laptop & Table</Option>
-                <Option value="camera">Camera & Flycam</Option>
-                <Option value="smartwatch">Smartwatch</Option>
-                <Option value="smartphone">Smartphone</Option>
+                <Option value="shampoo & conditioner">
+                  Shampoo & Conditioner
+                </Option>
+                <Option value="styling products">Styling Products</Option>
+                <Option value="accessories">Accessories</Option>
+                <Option value="hair color">Hair Color</Option>
+                <Option value="hair styling tools">Hair Styling Tools</Option>
+                <Option value="hair brushes & combs">
+                  Hair Brushes & Combs
+                </Option>
               </Select>
               {errorCategory && (
                 <div className="category-error">Category is required!</div>
@@ -245,8 +269,8 @@ function AddProduct({ setIsAddProduct, dataAddProduct, onAddProductItem }) {
             <label className="mb-2">Product Images</label>
             <Space direction="vertical" style={{ width: '100%' }} size="large">
               <Upload
+                customRequest={custom}
                 onChange={hanldeChangeUpload}
-                action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
                 listType="picture"
                 maxCount={5}
                 multiple

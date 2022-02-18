@@ -17,7 +17,7 @@ function Routes() {
           <Auth />
         </Route>
       ) : (
-        <Redirect from={ROUTING.AUTH} to="/" />
+        <Redirect from={ROUTING.AUTH} to="/products" />
       )}
 
       {!isAuthorized ? (

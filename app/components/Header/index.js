@@ -1,6 +1,6 @@
 import { Popover, Button } from 'antd';
 import React, { memo, useRef, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { NavLink, Link } from 'react-router-dom';
 import { BsCart2 } from 'react-icons/bs';
 import { AiOutlineUser } from 'react-icons/ai';
 import { useInjectSaga } from 'utils/injectSaga';
@@ -116,16 +116,56 @@ function Header({ onGetMyProfile }) {
           <nav className="fill">
             <ul>
               <li>
-                <a href="#">products</a>
+                <NavLink
+                  to="/products"
+                  activeClassName="active"
+                  isActive={(match, location) => {
+                    if (location.pathname.includes('products')) {
+                      return true;
+                    }
+                  }}
+                >
+                  Products
+                </NavLink>
               </li>
               <li>
-                <a href="#">story</a>
+                <NavLink
+                  to="/hairs-style"
+                  activeClassName="active"
+                  isActive={(match, location) => {
+                    if (location.pathname.includes('hairs-style')) {
+                      return true;
+                    }
+                  }}
+                >
+                  Hair Style
+                </NavLink>
               </li>
               <li>
-                <a href="#">manufacturing</a>
+                <NavLink
+                  to="/guest-services"
+                  activeClassName="active"
+                  isActive={(match, location) => {
+                    if (location.pathname.includes('guest-services')) {
+                      return true;
+                    }
+                  }}
+                >
+                  Guest Services
+                </NavLink>
               </li>
               <li>
-                <a href="#">packaging</a>
+                <NavLink
+                  to="/about-us"
+                  activeClassName="active"
+                  isActive={(match, location) => {
+                    if (location.pathname.includes('about-us')) {
+                      return true;
+                    }
+                  }}
+                >
+                  About Us
+                </NavLink>
               </li>
             </ul>
           </nav>

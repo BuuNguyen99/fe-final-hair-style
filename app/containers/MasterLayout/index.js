@@ -2,9 +2,12 @@ import React from 'react';
 import { Helmet } from 'react-helmet';
 import Header from 'components/Header';
 import AsideMenu from 'components/AsideMenu';
-import { Switch, Route } from 'react-router-dom';
+import { Switch, Route, Redirect } from 'react-router-dom';
 import HomePage from 'containers/HomePage';
 import MyProfile from 'containers/MyProfile';
+import HairsStyle from 'containers/HairsStyle';
+import GuestServices from 'containers/GuestServices';
+import AboutUs from 'containers/AboutUs';
 
 export default function MasterLayout() {
   return (
@@ -18,8 +21,13 @@ export default function MasterLayout() {
         <div className="main container-fluid">
           <Header />
           <Switch>
-            <Route path="/" component={HomePage} exact />
+            <Route path="/products" component={HomePage} exact />
             <Route path="/my-profile" component={MyProfile} exact />
+            <Route path="/hairs-style" component={HairsStyle} exact />
+            <Route path="/guest-services" component={GuestServices} exact />
+            <Route path="/about-us" component={AboutUs} exact />
+            <Redirect from="/" exact to="/products" />
+            <Redirect to="/products" />
           </Switch>
         </div>
       </div>
