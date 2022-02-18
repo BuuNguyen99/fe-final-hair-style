@@ -317,3 +317,61 @@
     }
   }
 }
+
+.content__hair {
+  .ant-upload-picture-card-wrapper {
+    text-align: center;
+  }
+  .ant-upload.ant-upload-select-picture-card {
+    width: 200px !important;
+    height: 200px !important;
+  }
+  .ant-upload {
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+  .title {
+    margin-top: 30px;
+    font-size: 16px;
+    text-align: center;
+    font-weight: 500;
+    color: #4d5151;
+  }
+  .arrow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .result-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .image-result {
+    width: 200px !important;
+    height: 200px !important;
+    text-align: center;
+    vertical-align: top;
+    background-color: #fafafa;
+    border: 1px dashed #d9d9d9;
+    border-radius: 2px;
+    transition: border-color 0.3s;
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+  }
+  .face-shape {
+    text-align: center;
+    margin-top: 30px;
+    color: #4d5151;
+    span {
+      font-weight: 800;
+      color: #8a6f53;
+    }
+  }
+}

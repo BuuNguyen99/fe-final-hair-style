@@ -1,10 +1,8 @@
 .upload-image {
-  margin-right: 20px;
-
   &__section {
     width: 100%;
     height: 222px;
-    border: 1px solid #605E5C;
+    border: 1px solid #605e5c;
     border-radius: 31px;
   }
 
@@ -16,7 +14,7 @@
     position: relative;
     height: 188.36px;
     margin: 16px;
-    border: 1px dashed #9A9AB0;
+    border: 1px dashed #9a9ab0;
     border-radius: 31px;
 
     .icon-camera {
@@ -54,7 +52,7 @@
     right: 0;
     margin: 0 auto;
     text-align: center;
-    color: #11142D;
+    color: #11142d;
     font-family: 'Poppins', sans-serif;
     font-weight: 500;
     font-size: 0.923rem;
@@ -64,7 +62,7 @@
     }
 
     .upload-link {
-      color: #1C7FF0;
+      color: #1c7ff0;
       text-decoration: underline;
     }
   }
@@ -76,7 +74,7 @@
     justify-content: center;
 
     .spinner-upload {
-      color: #00BAB4 !important;
+      color: #00bab4 !important;
     }
   }
   .error-message {
@@ -85,10 +83,10 @@
     font-family: 'Poppins', sans-serif;
     font-weight: 400;
     margin-top: 0.5rem;
-    font-size: .925rem;
-    color: #F1416C;
+    font-size: 0.925rem;
+    color: #f1416c;
   }
   .border-error {
-    border: 1px solid #F1416C;
+    border: 1px solid #f1416c;
   }
 }
