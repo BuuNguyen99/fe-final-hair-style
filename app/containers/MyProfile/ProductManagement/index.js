@@ -108,6 +108,7 @@ function ProductManagement({
           setIsAddProduct={setIsAddProduct}
           dataAddProduct={dataAddProduct}
           onAddProductItem={onAddProductItem}
+          onGetViewHomeProduct={onGetViewHomeProduct}
         />
       )}
     </div>
