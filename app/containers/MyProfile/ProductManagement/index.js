@@ -1,3 +1,4 @@
+/* eslint-disable no-nested-ternary */
 import { Select, Button } from 'antd';
 import React, { useState, memo, useEffect } from 'react';
 import { compose } from 'redux';
@@ -8,10 +9,15 @@ import { useInjectReducer } from 'utils/injectReducer';
 import { useInjectSaga } from 'utils/injectSaga';
 import saga from 'containers/HomePage/saga';
 import reducer from 'containers/HomePage/reducer';
-import { makeSelectDataProduct } from 'containers/HomePage/selectors';
+import {
+  makeSelectDataProduct,
+  makeSelectDetailProduct,
+} from 'containers/HomePage/selectors';
 import {
   getViewHomeProduct,
   deleteProductItem,
+  editProduct,
+  getDetailProduct,
 } from 'containers/HomePage/actions';
 import EditableTable from './TableList';
 import AddProduct from './AddProduct';
@@ -25,14 +31,16 @@ function ProductManagement({
   dataProduct,
   onGetViewHomeProduct,
   onDeleteProductItem,
+  onGetDetailProduct,
+  dataDetailProduct,
+  onEditProduct,
 }) {
   useInjectReducer({ key, reducer });
   useInjectSaga({ key, saga });
-  const [page, setPage] = useState(1);
-  const [pageSize, setPageSize] = useState(10);
 
   const [filterCategory, setFilterCategory] = useState('');
-  const [isAddProduct, setIsAddProduct] = useState(true);
+  const [isAdd, setIsAdd] = useState(false);
+  const [isEdit, setIsEdit] = useState(false);
 
   const handleFilter = filter => {
     setFilterCategory(filter);
@@ -55,15 +63,41 @@ function ProductManagement({
     };
 
     const params = {
-      page: page - 1,
-      size: pageSize,
+      page: 0,
+      size: 99999,
     };
     onGetViewHomeProduct(data, params);
   }, [filterCategory]);
 
   return (
     <div className="product-management">
-      {isAddProduct ? (
+      {isAdd ? (
+        <AddProduct
+          dataAddProduct={dataAddProduct}
+          onAddProductItem={onAddProductItem}
+          onGetViewHomeProduct={onGetViewHomeProduct}
+          setIsAdd={setIsAdd}
+          isEdit={isEdit}
+          isAdd={isAdd}
+          setIsEdit={setIsEdit}
+          onGetDetailProduct={onGetDetailProduct}
+          onEditProduct={onEditProduct}
+          dataDetailProduct={dataDetailProduct}
+        />
+      ) : isEdit ? (
+        <AddProduct
+          setIsAdd={setIsAdd}
+          dataAddProduct={dataAddProduct}
+          onAddProductItem={onAddProductItem}
+          onGetViewHomeProduct={onGetViewHomeProduct}
+          isEdit={isEdit}
+          isAdd={isAdd}
+          setIsEdit={setIsEdit}
+          onGetDetailProduct={onGetDetailProduct}
+          onEditProduct={onEditProduct}
+          dataDetailProduct={dataDetailProduct}
+        />
+      ) : (
         <>
           <div className="product-management__filter mb-5">
             <Button
@@ -72,15 +106,17 @@ function ProductManagement({
               icon={<PlusOutlined />}
               size="large"
               className="add-product"
-              onClick={() => setIsAddProduct(false)}
+              onClick={() => setIsAdd(true)}
             >
               Add Product
             </Button>
             <Select
+              defaultValue={filterCategory}
               style={{ width: 200 }}
               onChange={handleFilter}
               placeholder="Select filter"
             >
+              <Option value="">All</Option>
               <Option value="shampoo & conditioner">
                 Shampoo & Conditioner
               </Option>
@@ -92,30 +128,21 @@ function ProductManagement({
             </Select>
           </div>
           <div className="product-management__table">
-            {!dataProduct?.isFetching && (
-              <EditableTable
-                setPage={setPage}
-                setPageSize={setPageSize}
-                pageSizeLimit={pageSize}
-                dataProduct={dataProduct?.data?.content}
-                onDeleteProductItem={onDeleteProductItem}
-              />
-            )}
+            <EditableTable
+              setIsAdd={setIsAdd}
+              setIsEdit={setIsEdit}
+              dataProduct={dataProduct?.data?.content}
+              onDeleteProductItem={onDeleteProductItem}
+            />
           </div>
         </>
-      ) : (
-        <AddProduct
-          setIsAddProduct={setIsAddProduct}
-          dataAddProduct={dataAddProduct}
-          onAddProductItem={onAddProductItem}
-          onGetViewHomeProduct={onGetViewHomeProduct}
-        />
       )}
     </div>
   );
 }
 
 const mapStateToProps = createStructuredSelector({
+  dataDetailProduct: makeSelectDetailProduct(),
   dataProduct: makeSelectDataProduct(),
 });
 
@@ -125,6 +152,9 @@ function mapDispatchToProps(dispatch) {
       dispatch(getViewHomeProduct(data, params)),
     onDeleteProductItem: (id, callBack) =>
       dispatch(deleteProductItem(id, callBack)),
+    onGetDetailProduct: params => dispatch(getDetailProduct(params)),
+    onEditProduct: (id, data, callBack) =>
+      dispatch(editProduct(id, data, callBack)),
   };
 }
 

@@ -2,13 +2,13 @@ import React from 'react';
 import 'antd/dist/antd.css';
 import { Popconfirm, Table, Typography } from 'antd';
 import { toast } from 'react-toastify';
+import { CookiesStorage } from 'shared/configs/cookie';
 
 function EditableTable({
-  setPage,
-  setPageSize,
-  pageSizeLimit,
   dataProduct,
   onDeleteProductItem,
+  setIsAdd,
+  setIsEdit,
 }) {
   const columns = [
     {
@@ -48,11 +48,13 @@ function EditableTable({
       width: '8%',
       render: (_, record) => (
         <>
-          <Typography.Link>Edit</Typography.Link>
+          <Typography.Link onClick={() => handleEditProduct(record?.slug)}>
+            Edit
+          </Typography.Link>
           <Popconfirm
             className="mx-3"
             title="Sure to Delete?"
-            onConfirm={() => handleDelete(record.id)}
+            onConfirm={() => handleDelete(record?.id)}
           >
             <Typography.Link>Delete</Typography.Link>
           </Popconfirm>
@@ -60,6 +62,12 @@ function EditableTable({
       ),
     },
   ];
+
+  const handleEditProduct = slug => {
+    CookiesStorage.setCookieData('slug', slug);
+    setIsAdd(false);
+    setIsEdit(true);
+  };
 
   const handleDelete = id => {
     const idArray = [id];
@@ -74,17 +82,11 @@ function EditableTable({
     toast.success('Delete product item  Successfully');
   };
 
-  const handleChangeTable = ({ current, pageSize }) => {
-    setPage(current);
-    setPageSize(pageSize);
-  };
-
   return (
     <Table
-      onChange={handleChangeTable}
       columns={columns}
       dataSource={dataProduct}
-      pagination={{ pageSize: pageSizeLimit }}
+      pagination={{ pageSize: 10 }}
       scroll={{ y: 450 }}
     />
   );
