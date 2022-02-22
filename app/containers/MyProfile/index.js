@@ -21,6 +21,7 @@ import avatarDefault from 'assets/images/avatarDefault.png';
 import ChangeInfo from './ChangeInfo';
 import ChangePassword from './ChangePassword';
 import ProductManagement from './ProductManagement';
+import AccountManagement from './AccountManagement';
 
 const { TabPane } = Tabs;
 
@@ -153,6 +154,11 @@ function MyProfile({
                   dataAddProduct={dataAddProduct}
                   onAddProductItem={onAddProductItem}
                 />
+              </TabPane>
+            )}
+            {dataProfile?.profile?.account?.roles[0]?.name === 'ADMIN' && (
+              <TabPane tab="Account Management" key="7">
+                <AccountManagement />
               </TabPane>
             )}
           </Tabs>
