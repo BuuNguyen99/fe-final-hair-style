@@ -24,6 +24,7 @@ function FormAccount({
   onEditAccount,
   isAdd,
 }) {
+  const username = CookiesStorage.getCookieData('username') || null;
   const [gender, setGender] = useState(null);
   const [birth, setBirth] = useState(null);
   const [enable, setEnable] = useState(true);
@@ -71,7 +72,6 @@ function FormAccount({
   });
 
   useEffect(() => {
-    const username = CookiesStorage.getCookieData('username') || null;
     if (username && isEdit) {
       onGetDetailAccount(username);
     }
@@ -155,7 +155,7 @@ function FormAccount({
     };
 
     onGetListAccount(data, params);
-    setIsAdd(true);
+    setIsAdd(false);
     toast.success('Add Account successfully');
   };
 
@@ -189,8 +189,9 @@ function FormAccount({
     };
 
     onGetListAccount(data, params);
-    setIsAdd(true);
+    setIsAdd(false);
     setIsEdit(false);
+    onGetDetailAccount(username);
     CookiesStorage.setCookieData('username', null);
     toast.success('Edit Account successfully');
   };
@@ -420,7 +421,7 @@ function FormAccount({
                 <button
                   type="button"
                   onClick={() => {
-                    setIsAdd(true);
+                    setIsAdd(false);
                     setIsEdit(false);
                     CookiesStorage.setCookieData('username', null);
                   }}

@@ -1,3 +1,4 @@
+/* eslint-disable no-nested-ternary */
 import { Button } from 'antd';
 import React, { useState, memo, useEffect } from 'react';
 import { compose } from 'redux';
@@ -42,7 +43,7 @@ function AccountManagement({
   useInjectReducer({ key, reducer });
   useInjectSaga({ key, saga });
 
-  const [isAdd, setIsAdd] = useState(true);
+  const [isAdd, setIsAdd] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
 
   useEffect(() => {
@@ -75,6 +76,32 @@ function AccountManagement({
   return (
     <div className="product-management">
       {isAdd ? (
+        <FormAccount
+          setIsAdd={setIsAdd}
+          onGetListAccount={onGetListAccount}
+          dataAddAccount={dataAddAccount}
+          onAddAccount={onAddAccount}
+          isEdit={isEdit}
+          setIsEdit={setIsEdit}
+          dataDetailAccount={dataDetailAccount}
+          onGetDetailAccount={onGetDetailAccount}
+          onEditAccount={onEditAccount}
+          isAdd={isAdd}
+        />
+      ) : isEdit ? (
+        <FormAccount
+          setIsAdd={setIsAdd}
+          onGetListAccount={onGetListAccount}
+          dataAddAccount={dataAddAccount}
+          onAddAccount={onAddAccount}
+          isEdit={isEdit}
+          setIsEdit={setIsEdit}
+          dataDetailAccount={dataDetailAccount}
+          onGetDetailAccount={onGetDetailAccount}
+          onEditAccount={onEditAccount}
+          isAdd={isAdd}
+        />
+      ) : (
         <>
           <div className="product-management__filter mb-5">
             <Button
@@ -83,7 +110,7 @@ function AccountManagement({
               icon={<PlusOutlined />}
               size="large"
               className="add-product"
-              onClick={() => setIsAdd(false)}
+              onClick={() => setIsAdd(true)}
             >
               Add Account
             </Button>
@@ -99,19 +126,6 @@ function AccountManagement({
             />
           </div>
         </>
-      ) : (
-        <FormAccount
-          setIsAdd={setIsAdd}
-          onGetListAccount={onGetListAccount}
-          dataAddAccount={dataAddAccount}
-          onAddAccount={onAddAccount}
-          isEdit={isEdit}
-          setIsEdit={setIsEdit}
-          dataDetailAccount={dataDetailAccount}
-          onGetDetailAccount={onGetDetailAccount}
-          onEditAccount={onEditAccount}
-          isAdd={isAdd}
-        />
       )}
     </div>
   );
