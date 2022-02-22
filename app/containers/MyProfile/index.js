@@ -119,8 +119,8 @@ function MyProfile({
             </div>
           </div>
         </div>
-        <div className=" container tabs-profile">
-          <Tabs defaultActiveKey="1">
+        <div className=" container tabs-profile mt-5">
+          <Tabs defaultActiveKey="1" tabPosition="left">
             <TabPane tab="My Account" key="1">
               <ChangeInfo
                 profile={dataProfile?.profile}
