@@ -10,6 +10,8 @@ import {
   CHANGE_PASSWORD,
   ADD_PRODUCT_ACTION,
   RESET_PASSWORD,
+  GET_CART_PRODUCT,
+  DELETE_ITEM_CART,
 } from 'containers/Auth/constants';
 
 export const initialState = {
@@ -37,6 +39,10 @@ export const initialState = {
     isFetching: false,
   },
   addProduct: {
+    isFetching: false,
+  },
+  dataCart: {
+    data: [],
     isFetching: false,
   },
 };
@@ -127,6 +133,28 @@ const authReducer = (state = initialState, action) =>
         break;
       case FAILURE(ADD_PRODUCT_ACTION):
         draft.addProduct.isFetching = false;
+        break;
+      case REQUEST(GET_CART_PRODUCT):
+        draft.dataCart.data = [];
+        draft.dataCart.isFetching = true;
+        break;
+      case SUCCESS(GET_CART_PRODUCT):
+        draft.dataCart.isFetching = false;
+        draft.dataCart.data = action.data;
+        break;
+      case FAILURE(GET_CART_PRODUCT):
+        draft.dataCart.isFetching = false;
+        break;
+      case REQUEST(DELETE_ITEM_CART):
+        break;
+      case SUCCESS(DELETE_ITEM_CART):
+        // eslint-disable-next-line no-case-declarations
+        const indexItem = state.dataCart.data.findIndex(
+          item => item?.id === action.idItem,
+        );
+        draft.dataCart.data.splice(indexItem, 1);
+        break;
+      case FAILURE(DELETE_ITEM_CART):
         break;
       default:
         break;

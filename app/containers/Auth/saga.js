@@ -13,6 +13,8 @@ import {
   CHANGE_PASSWORD,
   ADD_PRODUCT_ACTION,
   RESET_PASSWORD,
+  GET_CART_PRODUCT,
+  DELETE_ITEM_CART,
 } from 'containers/Auth/constants';
 
 const { API } = ENDPOINT;
@@ -174,6 +176,41 @@ export function* addProductItem({ data, callBack }) {
   }
 }
 
+function getCartApi() {
+  return Api.get(API.GET_CART_PRODUCT);
+}
+
+export function* getCartApiSaga() {
+  try {
+    const response = yield call(getCartApi);
+    const { data } = response;
+    yield put({ type: SUCCESS(GET_CART_PRODUCT), data });
+  } catch (error) {
+    yield put({ type: FAILURE(GET_CART_PRODUCT), error });
+  }
+}
+
+function deleteItemCartApi(id) {
+  return Api.delete(
+    API.DELETE_ITEM_CART_API,
+    {},
+    {
+      params: {
+        productId: id,
+      },
+    },
+  );
+}
+
+export function* deleteItemCartSaga({ id, idItem }) {
+  try {
+    yield call(deleteItemCartApi, id);
+    yield put({ type: SUCCESS(DELETE_ITEM_CART), idItem });
+  } catch (error) {
+    yield put({ type: FAILURE(DELETE_ITEM_CART), error });
+  }
+}
+
 export default function* authData() {
   yield takeLatest(REQUEST(REMOVE_TOKEN), signOut);
   yield takeLatest(REQUEST(GET_PROFILE), getMyProfile);
@@ -184,4 +221,6 @@ export default function* authData() {
   yield takeLatest(REQUEST(RESET_PASSWORD), resetPassword);
   yield takeLatest(REQUEST(CHANGE_PASSWORD), changePasswordAccount);
   yield takeLatest(REQUEST(ADD_PRODUCT_ACTION), addProductItem);
+  yield takeLatest(REQUEST(GET_CART_PRODUCT), getCartApiSaga);
+  yield takeLatest(REQUEST(DELETE_ITEM_CART), deleteItemCartSaga);
 }

@@ -1,110 +1,85 @@
 import { Popover, Button } from 'antd';
 import React, { memo, useRef, useEffect } from 'react';
-import { NavLink, Link } from 'react-router-dom';
+import { Link, NavLink, useHistory } from 'react-router-dom';
 import { BsCart2 } from 'react-icons/bs';
 import { AiOutlineUser } from 'react-icons/ai';
+import { compose } from 'redux';
+import { connect } from 'react-redux';
+import { createStructuredSelector } from 'reselect';
 import { useInjectSaga } from 'utils/injectSaga';
 import { useInjectReducer } from 'utils/injectReducer';
 import saga from 'containers/Auth/saga';
 import reducer from 'containers/Auth/reducer';
-import { createStructuredSelector } from 'reselect';
-import { connect } from 'react-redux';
-import { compose } from 'redux';
 import { makeSelectMyProfile } from 'containers/Auth/selectors';
 import { getProfile } from 'containers/Auth/actions';
 import { CookiesStorage } from '../../shared/configs/cookie';
 import { useDetectOutsideClick } from './useDetectOutsideClick';
+import { formatPriceVND } from '../../utils/common';
+import { makeSelectCartProduct } from '../../containers/Auth/selectors';
+import { getCartProduct } from '../../containers/Auth/actions';
 
 const key = 'auth';
 
-function Header({ onGetMyProfile }) {
+function Header({ dataProfile, dataCart, onGetMyProfile, onGetCartProduct }) {
+  const history = useHistory();
   const dropdownRef = useRef(null);
   const isAuthen = CookiesStorage.authenticated();
+
+  useInjectReducer({ key, reducer });
+  useInjectSaga({ key, saga });
 
   const [isActive, setIsActive] = useDetectOutsideClick(dropdownRef, false);
   const onClick = () => {
     setIsActive(!isActive);
   };
 
-  useInjectReducer({ key, reducer });
-  useInjectSaga({ key, saga });
-
   const logout = () => {
-    window.location.reload();
     CookiesStorage.clearData();
+    history.push('/auth/login');
   };
 
   useEffect(() => {
     onGetMyProfile();
+    onGetCartProduct();
   }, []);
 
-  const content = (
+  const handleBuyNow = () => {
+    history.push('/order-list');
+  };
+
+  const content = !dataCart?.isFetching && (
     <div className="products-list">
-      <div className="products-item">
-        <div className="left">
-          <div className="products-item__image">
-            <img
-              src="https://dji-vietnam.vn/wp-content/uploads/2021/07/dji-mini-se-1-400x400.jpg"
-              alt=""
-            />
+      {dataCart?.data?.length > 0 ? (
+        <>
+          {dataCart?.data?.map((el, index) => (
+            <Link
+              to={`/products/${el?.product?.slug}`}
+              className="products-item"
+              key={`item-p-${index}`}
+            >
+              <div className="left">
+                <div className="products-item__image">
+                  <img src={el?.product?.images[0]?.url} alt="" />
+                </div>
+                <div className="products-item__contents">
+                  <p className="title">{el?.product?.title}</p>
+                  <small className="quantity muted">x{el?.quantity}</small>
+                </div>
+              </div>
+              <p className="products-item__price">
+                {formatPriceVND(el?.unitPrice.toString())} VND
+              </p>
+            </Link>
+          ))}
+          <div className="view-cart">
+            <Button type="primary" danger onClick={handleBuyNow}>
+              Buy Now
+            </Button>
           </div>
-          <div className="products-item__contents">
-            <p className="title">Flycam</p>
-            <small className="quantity muted">x4</small>
-          </div>
-        </div>
-        <p className="products-item__price">$299</p>
-      </div>
-      <div className="products-item">
-        <div className="left">
-          <div className="products-item__image">
-            <img
-              src="https://dji-vietnam.vn/wp-content/uploads/2021/07/dji-mini-se-1-400x400.jpg"
-              alt=""
-            />
-          </div>
-          <div className="products-item__contents">
-            <p className="title">Flycam</p>
-            <small className="quantity muted">x4</small>
-          </div>
-        </div>
-        <p className="products-item__price">$299</p>
-      </div>
-      <div className="products-item">
-        <div className="left">
-          <div className="products-item__image">
-            <img
-              src="https://dji-vietnam.vn/wp-content/uploads/2021/07/dji-mini-se-1-400x400.jpg"
-              alt=""
-            />
-          </div>
-          <div className="products-item__contents">
-            <p className="title">Flycam</p>
-            <small className="quantity muted">x4</small>
-          </div>
-        </div>
-        <p className="products-item__price">$299</p>
-      </div>
-      <div className="products-item">
-        <div className="left">
-          <div className="products-item__image">
-            <img
-              src="https://dji-vietnam.vn/wp-content/uploads/2021/07/dji-mini-se-1-400x400.jpg"
-              alt=""
-            />
-          </div>
-          <div className="products-item__contents">
-            <p className="title">Flycam</p>
-            <small className="quantity muted">x4</small>
-          </div>
-        </div>
-        <p className="products-item__price">$299</p>
-      </div>
-      <div className="view-cart">
-        <Button type="primary" danger>
-          View Cart
-        </Button>
-      </div>
+        </>
+      ) : (
+        'no data'
+      )}
     </div>
   );
 
@@ -172,14 +147,18 @@ function Header({ onGetMyProfile }) {
         </section>
         <div className="header__menu-icon">
           <ul className="icon-list">
-            <li className="icon-item">
-              <p className="icon-link">
-                <Popover placement="bottomRight" content={content}>
-                  <BsCart2 className="icon icon-user" />
-                  {isAuthen && <span className="mark">3</span>}
-                </Popover>
-              </p>
-            </li>
+            {dataProfile?.profile?.account?.roles[0]?.name === 'ADMIN' && (
+              <li className="icon-item">
+                <p className="icon-link">
+                  <Popover placement="bottomRight" content={content}>
+                    <BsCart2 className="icon icon-user" />
+                    {dataCart?.data?.length > 0 && (
+                      <span className="mark">{dataCart?.data?.length}</span>
+                    )}
+                  </Popover>
+                </p>
+              </li>
+            )}
             <li className="icon-item">
               <a
                 href
@@ -217,11 +196,13 @@ function Header({ onGetMyProfile }) {
 
 const mapStateToProps = createStructuredSelector({
   dataProfile: makeSelectMyProfile(),
+  dataCart: makeSelectCartProduct(),
 });
 
 export function mapDispatchToProps(dispatch) {
   return {
     onGetMyProfile: () => dispatch(getProfile()),
+    onGetCartProduct: () => dispatch(getCartProduct()),
   };
 }
 

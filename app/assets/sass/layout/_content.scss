@@ -307,7 +307,7 @@
     }
     .rating {
       font-size: 0.8rem;
-      color: #dd4453;
+      color: #fadb14;
     }
   }
   &:hover {
@@ -372,6 +372,85 @@
     span {
       font-weight: 800;
       color: #8a6f53;
+    }
+  }
+}
+
+.view-cart {
+  .order-list {
+    &__header {
+      border-bottom: solid 1px #eee;
+    }
+    &__item {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      padding: 10px 0;
+      border-bottom: solid 1px #eee;
+    }
+    .header-item {
+      font-weight: 700;
+      text-transform: uppercase;
+      display: block;
+      padding-bottom: 0.75em;
+      font-size: 1.2rem;
+    }
+
+    .item-product {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+      }
+      p {
+        color: #333;
+        font-size: 14px;
+      }
+    }
+  }
+}
+
+.header-payment {
+  margin: 20px 0;
+  h3 {
+    text-transform: uppercase;
+    font-size: 16px;
+    background: #eee;
+    padding: 11px 10px;
+  }
+  p {
+    font-size: 12px;
+  }
+  .total {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    p {
+      font-size: 14px;
+    }
+  }
+  .payment-money {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    .payment-money-text {
+      font-size: 14px;
+      font-weight: 600;
+    }
+    .money-text {
+      font-size: 14px;
+      font-weight: 800;
+      color: #d00;
+    }
+  }
+  .button-order {
+    span {
+      font-size: 14px;
+      font-weight: 600;
+      text-transform: uppercase;
     }
   }
 }

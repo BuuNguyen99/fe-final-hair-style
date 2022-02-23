@@ -51,6 +51,12 @@ const makeSelectAddProduct = () =>
     authState => authState.addProduct,
   );
 
+const makeSelectCartProduct = () =>
+  createSelector(
+    selectAuth,
+    authState => authState.dataCart,
+  );
+
 export {
   selectAuth,
   makeSelectMyProfile,
@@ -61,4 +67,5 @@ export {
   makeSelectChangePasswordAccount,
   makeSelectResetPasswordAccount,
   makeSelectAddProduct,
+  makeSelectCartProduct,
 };

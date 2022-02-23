@@ -54,4 +54,13 @@ const removeEmpty = obj => {
   return notNullOrUndefinedProp;
 };
 
-export { handlePayload, stringifyParams, scrollToTop, removeEmpty };
+const formatPriceVND = currency =>
+  currency ? currency.replace(/\B(?=(\d{3})+(?!\d))/g, '.') : '';
+
+export {
+  handlePayload,
+  stringifyParams,
+  scrollToTop,
+  removeEmpty,
+  formatPriceVND,
+};

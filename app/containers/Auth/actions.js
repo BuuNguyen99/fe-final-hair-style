@@ -9,6 +9,8 @@ import {
   CHANGE_PASSWORD,
   ADD_PRODUCT_ACTION,
   RESET_PASSWORD,
+  GET_CART_PRODUCT,
+  DELETE_ITEM_CART,
 } from 'containers/Auth/constants';
 
 export function registerAccount(data, callBack) {
@@ -76,5 +78,19 @@ export function addProductItem(data, callBack) {
     type: REQUEST(ADD_PRODUCT_ACTION),
     data,
     callBack,
+  };
+}
+
+export function getCartProduct() {
+  return {
+    type: REQUEST(GET_CART_PRODUCT),
+  };
+}
+
+export function deleteItemCart(id, idItem) {
+  return {
+    type: REQUEST(DELETE_ITEM_CART),
+    id,
+    idItem,
   };
 }
