@@ -17,7 +17,6 @@ import {
   changePasswordAccount,
   addProductItem,
 } from 'containers/Auth/actions';
-import avatarDefault from 'assets/images/avatarDefault.png';
 import ChangeInfo from './ChangeInfo';
 import ChangePassword from './ChangePassword';
 import ProductManagement from './ProductManagement';
@@ -66,60 +65,7 @@ function MyProfile({
         </h2>
       </div>
       <div className=" my-profile__info mt-5">
-        <div className="information">
-          <div className="container">
-            <div className="row">
-              <div className="col-3" />
-              <div className="col-9 content">
-                <div className="avatar">
-                  <img
-                    src={dataProfile?.profile?.linkAvatar || ''}
-                    alt="avatar"
-                    onError={e => {
-                      e.target.onerror = null;
-                      e.target.src = avatarDefault;
-                    }}
-                  />
-                </div>
-                <div className="info-text">
-                  <h3>
-                    {`${dataProfile?.profile?.firstname} ${
-                      dataProfile?.profile?.lastname
-                    }`}
-                  </h3>
-                  <p className="username">
-                    @{dataProfile?.profile?.account?.username}
-                  </p>
-                  <div className="info-text__item">
-                    <p>
-                      <strong>Gender</strong>
-                      {dataProfile?.profile?.gender === true
-                        ? 'Male'
-                        : dataProfile?.profile?.gender === false
-                        ? 'Female'
-                        : '-'}
-                    </p>
-                    <p>
-                      <strong>Date of birth</strong>
-                      {dataProfile?.profile?.birthday || '-'}
-                    </p>
-                  </div>
-                  <div className="info-text__item">
-                    <p>
-                      <strong>Phone</strong>
-                      {dataProfile?.profile?.mobile || '-'}
-                    </p>
-                    <p>
-                      <strong>Address</strong>
-                      {dataProfile?.profile?.address || '-'}
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div className=" container tabs-profile mt-5">
+        <div className="tabs-profile mt-5">
           <Tabs defaultActiveKey="1" tabPosition="left">
             <TabPane tab="My Account" key="1">
               <ChangeInfo

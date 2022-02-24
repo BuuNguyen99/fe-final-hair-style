@@ -1,4 +1,4 @@
-import React, { memo, useState, useEffect } from 'react';
+import React, { memo, useEffect, useState } from 'react';
 import logo from 'assets/images/logo.png';
 import { Link, useLocation } from 'react-router-dom';
 import { compose } from 'redux';
@@ -18,23 +18,23 @@ function AsideMenu({ onGetViewHomeProduct }) {
   const { pathname } = useLocation();
   const [filterCategory, setFilterCategory] = useState('');
 
-  const checkPathname = pathname.includes('/products');
-
   useInjectReducer({ key, reducer });
   useInjectSaga({ key, saga });
 
   const handleFilter = filter => {
     CookiesStorage.setCookieData('filterCategory', filter);
     setFilterCategory(filter);
+
+    handleFetchData(filter);
   };
 
-  useEffect(() => {
+  const handleFetchData = filter => {
     const data = {
       searchFilters: [
         {
           property: 'category',
           operator: 'LIKE',
-          value: filterCategory,
+          value: filter,
         },
       ],
       sortOrder: {
@@ -49,7 +49,30 @@ function AsideMenu({ onGetViewHomeProduct }) {
       size: 12,
     };
     onGetViewHomeProduct(data, params);
-  }, [filterCategory]);
+  };
+
+  useEffect(() => {
+    const data = {
+      searchFilters: [
+        {
+          property: 'category',
+          operator: 'LIKE',
+          value: '',
+        },
+      ],
+      sortOrder: {
+        ascendingOrder: [],
+        descendingOrder: [],
+      },
+      joinColumnProps: [],
+    };
+
+    const params = {
+      page: 0,
+      size: 12,
+    };
+    onGetViewHomeProduct(data, params);
+  }, []);
 
   return (
     <div className="aside-menu">
@@ -58,7 +81,7 @@ function AsideMenu({ onGetViewHomeProduct }) {
           <img src={logo} alt="logo" />
         </Link>
       </div>
-      {checkPathname && (
+      {pathname === '/products' && (
         <>
           <div className="aside-menu__title">
             <h1>Explore</h1>

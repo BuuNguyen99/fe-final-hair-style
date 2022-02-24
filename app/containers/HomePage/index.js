@@ -1,4 +1,4 @@
-import React, { memo, useState, useEffect } from 'react';
+import React, { memo, useState } from 'react';
 import { Select } from 'antd';
 import PaginationComponent from 'components/Pagination';
 import { createStructuredSelector } from 'reselect';
@@ -14,15 +14,6 @@ function HomePage({ dataProduct, onGetViewHomeProduct }) {
   const [page, setPage] = useState(1);
   const filterCategory = CookiesStorage.getCookieData('filterCategory') || '';
   function handleChange(value) {
-    // eslint-disable-next-line no-console
-    console.log(`selected ${value}`);
-  }
-
-  const handleCallbackPage = value => {
-    setPage(value);
-  };
-
-  useEffect(() => {
     const data = {
       searchFilters: [
         {
@@ -42,8 +33,43 @@ function HomePage({ dataProduct, onGetViewHomeProduct }) {
       page: page - 1,
       size: 12,
     };
+    if (value === 'Latest Product') {
+      data.sortOrder.descendingOrder = ['createdAt'];
+    }
+    if (value === 'Price Descending') {
+      data.sortOrder.descendingOrder = ['price'];
+    }
+
+    if (value === 'Price Increase') {
+      data.sortOrder.ascendingOrder = ['price'];
+    }
     onGetViewHomeProduct(data, params);
-  }, [page, filterCategory]);
+  }
+
+  const handleCallbackPage = value => {
+    setPage(value);
+
+    const data = {
+      searchFilters: [
+        {
+          property: 'category',
+          operator: 'LIKE',
+          value: filterCategory,
+        },
+      ],
+      sortOrder: {
+        ascendingOrder: [],
+        descendingOrder: [],
+      },
+      joinColumnProps: [],
+    };
+
+    const params = {
+      page: value - 1,
+      size: 12,
+    };
+    onGetViewHomeProduct(data, params);
+  };
 
   return (
     <div className="page-product-list">
@@ -56,22 +82,25 @@ function HomePage({ dataProduct, onGetViewHomeProduct }) {
           >
             <Option value="Latest Product">Latest Product</Option>
             <Option value="Price Descending">Price Descending</Option>
-            <Option value="Prices Increase">Prices Increase</Option>
+            <Option value="Price Increase">Prices Increase</Option>
           </Select>
         </div>
         <div className="product-list-item">
           {!dataProduct?.isFetching && (
             <div className="row">
-              <ProductItem />
+              {dataProduct?.data?.content &&
+                dataProduct?.data?.content.map((el, index) => (
+                  <ProductItem data={el} key={index} />
+                ))}
             </div>
           )}
         </div>
         <div className="product-pagination">
           <PaginationComponent
             handleCallbackPage={handleCallbackPage}
-            pageCount={dataProduct?.data?.totalPages}
-            showLengthData={dataProduct?.data?.totalItems}
+            pageCount={dataProduct?.data?.totalItems}
             activePage={page}
+            limit={12}
           />
         </div>
       </div>

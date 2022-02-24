@@ -373,15 +373,21 @@ function AddProduct({
                 <label className="mb-2 required">Category</label>
                 <Select
                   defaultValue={filterProduct}
-                  style={{ width: 270 }}
+                  style={{ width: 360 }}
                   onChange={handleChangeCategory}
                   placeholder="Select category"
                   className={` ${errorCategory ? 'error' : ''}`}
                 >
-                  <Option value="laptop">Laptop & Table</Option>
-                  <Option value="camera">Camera & Flycam</Option>
-                  <Option value="smartwatch">Smartwatch</Option>
-                  <Option value="smartphone">Smartphone</Option>
+                  <Option value="shampoo & conditioner">
+                    Shampoo & Conditioner
+                  </Option>
+                  <Option value="styling products">Styling Products</Option>
+                  <Option value="accessories">Accessories</Option>
+                  <Option value="hair color">Hair Color</Option>
+                  <Option value="hair styling tools">Hair Styling Tools</Option>
+                  <Option value="hair brushes & combs">
+                    Hair Brushes & Combs
+                  </Option>
                 </Select>
                 {errorCategory && (
                   <div className="category-error">Category is required!</div>

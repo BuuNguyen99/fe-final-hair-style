@@ -1,23 +1,33 @@
 import React from 'react';
 import { Rate } from 'antd';
+import { Link } from 'react-router-dom';
+import { formatPriceVND } from '../../../utils/common';
 
-function ProductItem() {
+function ProductItem({ data }) {
   return (
     <div className="col-2 item-show">
-      <div className="item">
-        <p className="item__sell">Get up to 10% off Today Only!</p>
-        <div className="item__image">
-          <img
-            src="https://dji-vietnam.vn/wp-content/uploads/2021/07/dji-mini-se-1-400x400.jpg"
-            alt=""
-          />
+      <Link to={`/products/${data?.slug}`}>
+        <div className="item">
+          <p className="item__sell">
+            {/* {data?.discount > 0 &&
+              `Get up to ${data?.discount}% off Today Only!`} */}
+          </p>
+          <div className="item__image">
+            <img src={data?.images[0]?.url} alt="" />
+          </div>
+          <div className="item__infor">
+            <h3 className="title">{data?.title}</h3>
+            <p className="price">
+              {formatPriceVND(data?.price?.toString())} VND
+            </p>
+            <Rate
+              defaultValue={data?.averageRating}
+              disabled
+              className="rating"
+            />
+          </div>
         </div>
-        <div className="item__infor">
-          <h3 className="title">BLack Iphone Speaker</h3>
-          <p className="price">31.000.000 VND</p>
-          <Rate allowHalf defaultValue={2.5} disabled className="rating" />
-        </div>
-      </div>
+      </Link>
     </div>
   );
 }

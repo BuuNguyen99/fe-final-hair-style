@@ -261,12 +261,11 @@
   }
 
   .product-pagination {
-    position: absolute;
-    bottom: 50px;
-    right: 20px;
     display: flex;
     align-items: center;
     justify-content: flex-end;
+    margin-top: 30px;
+    margin-right: 30px;
   }
 }
 
@@ -278,7 +277,8 @@
   padding: 30px;
   transition: all 0.2s ease-in-out;
   &__sell {
-    font-family: 500;
+    min-height: 35px;
+    font-weight: 500;
     font-size: 0.9rem;
   }
   &__image {
@@ -453,4 +453,13 @@
       text-transform: uppercase;
     }
   }
+}
+
+.product-list-item {
+  margin: 0 20px;
+  min-height: 723.69px;
+}
+
+.tabs-profile {
+  margin: 20px;
 }

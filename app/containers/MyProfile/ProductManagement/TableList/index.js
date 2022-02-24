@@ -14,7 +14,7 @@ function EditableTable({
     {
       title: 'Product Name',
       dataIndex: 'title',
-      width: '15%',
+      width: '12%',
     },
     {
       title: 'Price (VND)',
@@ -24,12 +24,12 @@ function EditableTable({
     {
       title: 'Rating',
       dataIndex: 'averageRating',
-      width: '5%',
+      width: '7%',
     },
     {
       title: 'Quantity',
       dataIndex: 'quantity',
-      width: '5%',
+      width: '7%',
     },
     {
       title: 'Category',
@@ -39,7 +39,7 @@ function EditableTable({
     {
       title: 'Short Description',
       dataIndex: 'metaTitle',
-      width: '23%',
+      width: '20%',
     },
     {
       title: '',
@@ -87,7 +87,7 @@ function EditableTable({
       columns={columns}
       dataSource={dataProduct}
       pagination={{ pageSize: 10 }}
-      scroll={{ y: 450 }}
+      scroll={{ y: 550 }}
     />
   );
 }
