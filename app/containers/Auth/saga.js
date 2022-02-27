@@ -15,6 +15,7 @@ import {
   RESET_PASSWORD,
   GET_CART_PRODUCT,
   DELETE_ITEM_CART,
+  GET_LIST_PRODUCT,
 } from 'containers/Auth/constants';
 
 const { API } = ENDPOINT;
@@ -211,6 +212,25 @@ export function* deleteItemCartSaga({ id, idItem }) {
   }
 }
 
+function getViewHomeProductApi(data, query) {
+  return Api.post(API.GET_LIST_PRODUCT_API, data, {
+    params: {
+      ...query,
+    },
+  });
+}
+
+export function* getViewHomeProduct({ dataProduct, params }) {
+  try {
+    const response = yield call(getViewHomeProductApi, dataProduct, params);
+    const { data } = response;
+
+    yield put({ type: SUCCESS(GET_LIST_PRODUCT), data });
+  } catch (error) {
+    yield put({ type: FAILURE(GET_LIST_PRODUCT), error });
+  }
+}
+
 export default function* authData() {
   yield takeLatest(REQUEST(REMOVE_TOKEN), signOut);
   yield takeLatest(REQUEST(GET_PROFILE), getMyProfile);
@@ -223,4 +243,5 @@ export default function* authData() {
   yield takeLatest(REQUEST(ADD_PRODUCT_ACTION), addProductItem);
   yield takeLatest(REQUEST(GET_CART_PRODUCT), getCartApiSaga);
   yield takeLatest(REQUEST(DELETE_ITEM_CART), deleteItemCartSaga);
+  yield takeLatest(REQUEST(GET_LIST_PRODUCT), getViewHomeProduct);
 }

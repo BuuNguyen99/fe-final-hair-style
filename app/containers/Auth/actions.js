@@ -10,6 +10,7 @@ import {
   ADD_PRODUCT_ACTION,
   RESET_PASSWORD,
   GET_CART_PRODUCT,
+  GET_LIST_PRODUCT,
   DELETE_ITEM_CART,
 } from 'containers/Auth/constants';
 
@@ -92,5 +93,13 @@ export function deleteItemCart(id, idItem) {
     type: REQUEST(DELETE_ITEM_CART),
     id,
     idItem,
+  };
+}
+
+export function getViewHomeProduct(dataProduct, params) {
+  return {
+    type: REQUEST(GET_LIST_PRODUCT),
+    dataProduct,
+    params,
   };
 }
