@@ -63,6 +63,12 @@ const makeSelectDataProduct = () =>
     homeState => homeState.dataProduct,
   );
 
+const makeSelectAboutHair = () =>
+  createSelector(
+    selectAuth,
+    homeState => homeState.dataAboutHair,
+  );
+
 export {
   selectAuth,
   makeSelectMyProfile,
@@ -75,4 +81,5 @@ export {
   makeSelectAddProduct,
   makeSelectCartProduct,
   makeSelectDataProduct,
+  makeSelectAboutHair,
 };

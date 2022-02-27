@@ -10,3 +10,4 @@ export const ADD_PRODUCT_ACTION = 'hairstyle/Auth/ADD_PRODUCT_ACTION';
 export const GET_CART_PRODUCT = 'hairstyle/Auth/GET_CART_PRODUCT';
 export const DELETE_ITEM_CART = 'hairstyle/Auth/DELETE_ITEM_CART';
 export const GET_LIST_PRODUCT = 'hairstyle/Auth/GET_LIST_PRODUCT';
+export const ABOUT_HAIR_STYLE = 'hairstyle/Auth/ABOUT_HAIR_STYLE';

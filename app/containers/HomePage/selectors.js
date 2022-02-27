@@ -51,6 +51,17 @@ const makeSelectDataComment = () =>
     homeState => homeState.dataComment,
   );
 
+const makeSelectDataHair = () =>
+  createSelector(
+    selectHomePage,
+    homeState => homeState.dataHair,
+  );
+
+const makeSelectDetailHair = () =>
+  createSelector(
+    selectHomePage,
+    homeState => homeState.dataDetailHair,
+  );
 export {
   selectHomePage,
   makeSelectDataProduct,
@@ -61,4 +72,6 @@ export {
   makeSelectDetailAccount,
   makeSelectDetailProduct,
   makeSelectDataComment,
+  makeSelectDataHair,
+  makeSelectDetailHair,
 };

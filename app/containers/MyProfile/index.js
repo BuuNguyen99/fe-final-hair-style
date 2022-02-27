@@ -21,6 +21,7 @@ import ChangeInfo from './ChangeInfo';
 import ChangePassword from './ChangePassword';
 import ProductManagement from './ProductManagement';
 import AccountManagement from './AccountManagement';
+import HairStyleManagement from './HairStyleManagement';
 
 const { TabPane } = Tabs;
 
@@ -80,14 +81,8 @@ function MyProfile({
                 onChangePasswordAccount={onChangePasswordAccount}
               />
             </TabPane>
-            <TabPane tab="My Purchase" key="3">
-              There&apos;s nothing here
-            </TabPane>
-            <TabPane tab="My Vouchers" key="4">
-              There&apos;s nothing here
-            </TabPane>
             {dataProfile?.profile?.account?.roles[0]?.name === 'ADMIN' && (
-              <TabPane tab="Product Management" key="5">
+              <TabPane tab="Product Management" key="3">
                 <ProductManagement
                   dataAddProduct={dataAddProduct}
                   onAddProductItem={onAddProductItem}
@@ -95,15 +90,12 @@ function MyProfile({
               </TabPane>
             )}
             {dataProfile?.profile?.account?.roles[0]?.name === 'ADMIN' && (
-              <TabPane tab="Hair Style Management" key="6">
-                <ProductManagement
-                  dataAddProduct={dataAddProduct}
-                  onAddProductItem={onAddProductItem}
-                />
+              <TabPane tab="Hair Style Management" key="4">
+                <HairStyleManagement />
               </TabPane>
             )}
             {dataProfile?.profile?.account?.roles[0]?.name === 'ADMIN' && (
-              <TabPane tab="Account Management" key="7">
+              <TabPane tab="Account Management" key="5">
                 <AccountManagement />
               </TabPane>
             )}

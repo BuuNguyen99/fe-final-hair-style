@@ -18,6 +18,11 @@ import {
   GET_LIST_COMMENT,
   ADD_COMMENT_PRODUCT,
   ADD_TO_CART,
+  GET_LIST_HAIR_STYLE,
+  ADD_HAIR_STYLE,
+  DELETE_HAIR_STYLE,
+  EDIT_HAIR_STYLE,
+  GET_DETAIL_HAIR,
 } from 'containers/HomePage/constants';
 
 const { API } = ENDPOINT;
@@ -281,6 +286,91 @@ export function* addToCartSaga({ dataProduct, callBack }) {
   }
 }
 
+function getListHairApi(data, query) {
+  return Api.post(API.GET_LIST_HAIR_STYLE_API, data, {
+    params: {
+      ...query,
+    },
+  });
+}
+
+export function* getListHairSaga({ dataHair, params }) {
+  try {
+    const response = yield call(getListHairApi, dataHair, params);
+    const { data } = response;
+    yield put({ type: SUCCESS(GET_LIST_HAIR_STYLE), data });
+  } catch (error) {
+    yield put({ type: FAILURE(GET_LIST_HAIR_STYLE), error });
+  }
+}
+
+function addHairApi(data) {
+  return Api.post(API.ADD_HAIR_API, data);
+}
+
+export function* addHairSaga({ dataHair, callBack }) {
+  try {
+    yield call(addHairApi, dataHair);
+    yield put({ type: SUCCESS(ADD_HAIR_STYLE) });
+    callBack?.();
+  } catch (error) {
+    callBack?.(error);
+    yield put({ type: FAILURE(ADD_HAIR_STYLE), error });
+  }
+}
+
+function deleteHairApi(id) {
+  return Api.delete(API.DELETE_HAIR_STYLE_API, [...id]);
+}
+
+export function* deleteHairSaga({ id, callBack }) {
+  try {
+    yield call(deleteHairApi, id);
+    yield put({ type: SUCCESS(DELETE_HAIR_STYLE), id });
+    callBack?.();
+  } catch (error) {
+    callBack?.(error);
+    yield put({ type: FAILURE(DELETE_HAIR_STYLE), error });
+  }
+}
+
+function updateHairAPI(data, id) {
+  return Api.patch(API.EDIT_HAIR_STYLE_API, data, {
+    params: {
+      id,
+    },
+  });
+}
+
+export function* updateHairSaga({ id, data, callBack }) {
+  try {
+    yield call(updateHairAPI, data, id);
+    yield put({ type: SUCCESS(EDIT_HAIR_STYLE) });
+    callBack?.();
+  } catch (error) {
+    callBack?.(error);
+    yield put({ type: FAILURE(EDIT_HAIR_STYLE), error });
+  }
+}
+
+function getDetailHairApi(params) {
+  return Api.get(API.GET_DETAIL_HAIR_API, {
+    params: {
+      slug: params,
+    },
+  });
+}
+
+export function* getDetailHairSaga({ params }) {
+  try {
+    const response = yield call(getDetailHairApi, params);
+    const { data } = response;
+    yield put({ type: SUCCESS(GET_DETAIL_HAIR), data });
+  } catch (error) {
+    yield put({ type: FAILURE(GET_DETAIL_HAIR), error });
+  }
+}
+
 export default function* authData() {
   yield takeLatest(REQUEST(DELETE_PRODUCT_ACTION), deleteProductItemSaga);
   yield takeEvery(REQUEST(GET_LIST_PRODUCT), getViewHomeProduct);
@@ -297,4 +387,9 @@ export default function* authData() {
   yield takeLatest(REQUEST(GET_LIST_COMMENT), getListCommentSaga);
   yield takeLatest(REQUEST(ADD_COMMENT_PRODUCT), addCommentSaga);
   yield takeLatest(REQUEST(ADD_TO_CART), addToCartSaga);
+  yield takeLatest(REQUEST(GET_LIST_HAIR_STYLE), getListHairSaga);
+  yield takeLatest(REQUEST(ADD_HAIR_STYLE), addHairSaga);
+  yield takeLatest(REQUEST(DELETE_HAIR_STYLE), deleteHairSaga);
+  yield takeLatest(REQUEST(EDIT_HAIR_STYLE), updateHairSaga);
+  yield takeLatest(REQUEST(GET_DETAIL_HAIR), getDetailHairSaga);
 }

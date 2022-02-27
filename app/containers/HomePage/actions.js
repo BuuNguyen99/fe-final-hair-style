@@ -15,6 +15,11 @@ import {
   GET_DETAIL_PRODUCT_ACTION,
   ADD_COMMENT_PRODUCT,
   ADD_TO_CART,
+  GET_LIST_HAIR_STYLE,
+  ADD_HAIR_STYLE,
+  DELETE_HAIR_STYLE,
+  EDIT_HAIR_STYLE,
+  GET_DETAIL_HAIR,
 } from 'containers/HomePage/constants';
 
 export function getViewHomeProduct(dataProduct, params) {
@@ -132,5 +137,44 @@ export function addToCart(dataProduct, callBack) {
     type: REQUEST(ADD_TO_CART),
     dataProduct,
     callBack,
+  };
+}
+
+export function getListHairStyle(dataHair, params) {
+  return {
+    type: REQUEST(GET_LIST_HAIR_STYLE),
+    dataHair,
+    params,
+  };
+}
+
+export function addHairStyles(dataHair, callBack) {
+  return {
+    type: REQUEST(ADD_HAIR_STYLE),
+    dataHair,
+    callBack,
+  };
+}
+
+export function deleteHair(id, callBack) {
+  return {
+    type: REQUEST(DELETE_HAIR_STYLE),
+    id,
+    callBack,
+  };
+}
+
+export function editHair(id, data, callBack) {
+  return {
+    type: REQUEST(EDIT_HAIR_STYLE),
+    id,
+    data,
+    callBack,
+  };
+}
+export function getDetailHair(params) {
+  return {
+    type: REQUEST(GET_DETAIL_HAIR),
+    params,
   };
 }

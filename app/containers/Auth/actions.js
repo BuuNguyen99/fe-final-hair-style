@@ -12,6 +12,7 @@ import {
   GET_CART_PRODUCT,
   GET_LIST_PRODUCT,
   DELETE_ITEM_CART,
+  ABOUT_HAIR_STYLE,
 } from 'containers/Auth/constants';
 
 export function registerAccount(data, callBack) {
@@ -100,6 +101,13 @@ export function getViewHomeProduct(dataProduct, params) {
   return {
     type: REQUEST(GET_LIST_PRODUCT),
     dataProduct,
+    params,
+  };
+}
+
+export function getAboutHairStyle(params) {
+  return {
+    type: REQUEST(ABOUT_HAIR_STYLE),
     params,
   };
 }

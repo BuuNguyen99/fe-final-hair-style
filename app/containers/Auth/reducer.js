@@ -13,6 +13,7 @@ import {
   GET_CART_PRODUCT,
   GET_LIST_PRODUCT,
   DELETE_ITEM_CART,
+  ABOUT_HAIR_STYLE,
 } from 'containers/Auth/constants';
 
 export const initialState = {
@@ -47,6 +48,10 @@ export const initialState = {
     isFetching: false,
   },
   dataProduct: {
+    data: [],
+    isFetching: false,
+  },
+  dataAboutHair: {
     data: [],
     isFetching: false,
   },
@@ -171,6 +176,17 @@ const authReducer = (state = initialState, action) =>
       case FAILURE(GET_LIST_PRODUCT):
         draft.dataProduct.data = [];
         draft.dataProduct.isFetching = false;
+        break;
+      case REQUEST(ABOUT_HAIR_STYLE):
+        draft.dataAboutHair.isFetching = true;
+        break;
+      case SUCCESS(ABOUT_HAIR_STYLE):
+        draft.dataAboutHair.data = action.data;
+        draft.dataAboutHair.isFetching = false;
+        break;
+      case FAILURE(ABOUT_HAIR_STYLE):
+        draft.dataAboutHair.data = [];
+        draft.dataAboutHair.isFetching = false;
         break;
       default:
         break;

@@ -16,6 +16,7 @@ import {
   GET_CART_PRODUCT,
   DELETE_ITEM_CART,
   GET_LIST_PRODUCT,
+  ABOUT_HAIR_STYLE,
 } from 'containers/Auth/constants';
 
 const { API } = ENDPOINT;
@@ -231,6 +232,24 @@ export function* getViewHomeProduct({ dataProduct, params }) {
   }
 }
 
+function aboutHairStyleApi(query) {
+  return Api.post(API.ABOUT_HAIR_STYLE_API, query);
+}
+
+export function* aboutHairStyleSaga({ params }) {
+  const dataPost = {
+    ...params,
+  };
+  try {
+    yield call(aboutHairStyleApi, dataPost);
+    yield put({
+      type: SUCCESS(ABOUT_HAIR_STYLE),
+    });
+  } catch (error) {
+    yield put({ type: FAILURE(ABOUT_HAIR_STYLE), error });
+  }
+}
+
 export default function* authData() {
   yield takeLatest(REQUEST(REMOVE_TOKEN), signOut);
   yield takeLatest(REQUEST(GET_PROFILE), getMyProfile);
@@ -244,4 +263,5 @@ export default function* authData() {
   yield takeLatest(REQUEST(GET_CART_PRODUCT), getCartApiSaga);
   yield takeLatest(REQUEST(DELETE_ITEM_CART), deleteItemCartSaga);
   yield takeLatest(REQUEST(GET_LIST_PRODUCT), getViewHomeProduct);
+  yield takeLatest(REQUEST(ABOUT_HAIR_STYLE), aboutHairStyleSaga);
 }

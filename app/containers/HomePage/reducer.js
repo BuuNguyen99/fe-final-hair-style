@@ -12,6 +12,9 @@ import {
   GET_DETAIL_ACCOUNT,
   GET_DETAIL_PRODUCT_ACTION,
   GET_LIST_COMMENT,
+  GET_LIST_HAIR_STYLE,
+  GET_DETAIL_HAIR,
+  DELETE_HAIR_STYLE,
 } from 'containers/HomePage/constants';
 
 export const initialState = {
@@ -46,6 +49,17 @@ export const initialState = {
     isFetching: false,
   },
   dataDeleteItemCart: {
+    isFetching: false,
+  },
+  dataHair: {
+    data: [],
+    isFetching: false,
+  },
+  dataDetailHair: {
+    data: [],
+    isFetching: false,
+  },
+  deleteHair: {
     isFetching: false,
   },
 };
@@ -177,6 +191,44 @@ const authReducer = (state = initialState, action) =>
       case FAILURE(GET_LIST_COMMENT):
         draft.dataComment.data = [];
         draft.dataComment.isFetching = false;
+        break;
+      case REQUEST(GET_LIST_HAIR_STYLE):
+        draft.dataHair.isFetching = true;
+        break;
+      case SUCCESS(GET_LIST_HAIR_STYLE):
+        draft.dataHair.data = action.data;
+        draft.dataHair.isFetching = false;
+        break;
+      case FAILURE(GET_LIST_HAIR_STYLE):
+        draft.dataHair.data = [];
+        draft.dataHair.isFetching = false;
+        break;
+      case REQUEST(GET_DETAIL_HAIR):
+        draft.dataDetailHair.data = [];
+        draft.dataDetailHair.isFetching = true;
+        break;
+      case SUCCESS(GET_DETAIL_HAIR):
+        draft.dataDetailHair.data = action.data;
+        draft.dataDetailHair.isFetching = false;
+        break;
+      case FAILURE(GET_DETAIL_HAIR):
+        draft.dataDetailHair.data = [];
+        draft.dataDetailHair.isFetching = false;
+        break;
+      case REQUEST(DELETE_HAIR_STYLE):
+        draft.deleteHair.isFetching = true;
+        break;
+      case SUCCESS(DELETE_HAIR_STYLE):
+        draft.deleteHair.isFetching = false;
+        // eslint-disable-next-line no-case-declarations
+        const indexItemHair = state.dataHair.data.content.findIndex(
+          item => item?.id === action.id[0],
+        );
+        draft.dataHair.data.content.splice(indexItemHair, 1);
+        draft.deleteHair.isFetching = false;
+        break;
+      case FAILURE(DELETE_HAIR_STYLE):
+        draft.deleteHair.isFetching = false;
         break;
       default:
         break;

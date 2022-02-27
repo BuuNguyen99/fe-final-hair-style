@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { memo, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import 'antd/dist/antd.css';
 import { Upload, message } from 'antd';
@@ -8,6 +8,17 @@ import {
   SwapRightOutlined,
 } from '@ant-design/icons';
 import axios from 'axios';
+import { compose } from 'redux';
+import { connect } from 'react-redux';
+import { useInjectSaga } from 'utils/injectSaga';
+import { useInjectReducer } from 'utils/injectReducer';
+import saga from 'containers/Auth/saga';
+import reducer from 'containers/Auth/reducer';
+import { createStructuredSelector } from 'reselect';
+import { getAboutHairStyle } from '../Auth/actions';
+import { makeSelectAboutHair } from '../Auth/selectors';
+
+const key = 'auth';
 
 function getBase64(img, callback) {
   const reader = new FileReader();
@@ -27,7 +38,10 @@ const beforeUpload = file => {
   return isJpgOrPng && isLt2M;
 };
 
-function HairsStyle() {
+function HairsStyle({ onGetListProduct, dataAboutHair }) {
+  useInjectReducer({ key, reducer });
+  useInjectSaga({ key, saga });
+
   const history = useHistory();
 
   const [loading, setLoading] = useState(false);
@@ -80,6 +94,7 @@ function HairsStyle() {
         onSuccess('ok');
         setUrlLink(data?.faceUrl);
         setFaceShape(data?.faceShape);
+        handleGetAboutHair(data?.faceShape);
         message.success(`Face recognition successful!`);
       })
       .catch(error => {
@@ -88,6 +103,26 @@ function HairsStyle() {
       });
   };
 
+  const handleGetAboutHair = face => {
+    const data = {
+      searchFilters: [
+        {
+          property: 'name',
+          operator: 'LIKE',
+          value: face,
+        },
+      ],
+      sortOrder: {
+        ascendingOrder: [],
+        descendingOrder: [],
+      },
+      joinColumnProps: [],
+    };
+    onGetListProduct(data);
+  };
+
+  // eslint-disable-next-line no-console
+  console.log(dataAboutHair);
   return (
     <div className="hairs-style">
       <div className="header-title">
@@ -161,4 +196,22 @@ function HairsStyle() {
   );
 }
 
-export default HairsStyle;
+const mapStateToProps = createStructuredSelector({
+  dataAboutHair: makeSelectAboutHair(),
+});
+
+export function mapDispatchToProps(dispatch) {
+  return {
+    onGetListProduct: params => dispatch(getAboutHairStyle(params)),
+  };
+}
+
+const withConnect = connect(
+  mapStateToProps,
+  mapDispatchToProps,
+);
+
+export default compose(
+  withConnect,
+  memo,
+)(HairsStyle);

@@ -24,6 +24,12 @@ export const ENDPOINT = {
     GET_CART_PRODUCT: '/api/cart/getAll',
     ADD_TO_CART_API: '/api/cart/addItem',
     DELETE_ITEM_CART_API: '/api/cart/removeItem',
+    ABOUT_HAIR_STYLE_API: '/api/hairstyle/faceShape/get',
+    GET_LIST_HAIR_STYLE_API: '/api/hairstyle/getAll',
+    ADD_HAIR_API: '/api/hairstyle/create',
+    DELETE_HAIR_STYLE_API: '/api/hairstyle/faceShape/delete',
+    GET_DETAIL_HAIR_API: 'api/hairstyle/detail',
+    EDIT_HAIR_STYLE_API: 'api/hairstyle/update',
   },
   ROUTING: {
     AUTH: '/auth',
