@@ -34,8 +34,9 @@ function Header({ dataProfile, dataCart, onGetMyProfile, onGetCartProduct }) {
   };
 
   const logout = () => {
+    window.location.reload();
     CookiesStorage.clearData();
-    history.push('/auth/login');
+    history.push('/');
   };
 
   useEffect(() => {
