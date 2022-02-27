@@ -38,7 +38,7 @@ function AsideMenu({ onGetViewHomeProduct }) {
         },
       ],
       sortOrder: {
-        ascendingOrder: [],
+        ascendingOrder: ['createdAt'],
         descendingOrder: [],
       },
       joinColumnProps: [],
@@ -61,7 +61,7 @@ function AsideMenu({ onGetViewHomeProduct }) {
         },
       ],
       sortOrder: {
-        ascendingOrder: [],
+        ascendingOrder: ['createdAt'],
         descendingOrder: [],
       },
       joinColumnProps: [],

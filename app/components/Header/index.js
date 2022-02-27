@@ -147,7 +147,7 @@ function Header({ dataProfile, dataCart, onGetMyProfile, onGetCartProduct }) {
         </section>
         <div className="header__menu-icon">
           <ul className="icon-list">
-            {dataProfile?.profile?.account?.roles[0]?.name === 'ADMIN' && (
+            {dataProfile?.profile?.account?.roles[0]?.name === 'USER' && (
               <li className="icon-item">
                 <p className="icon-link">
                   <Popover placement="bottomRight" content={content}>

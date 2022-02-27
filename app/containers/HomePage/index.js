@@ -12,8 +12,10 @@ const { Option } = Select;
 
 function HomePage({ dataProduct, onGetViewHomeProduct }) {
   const [page, setPage] = useState(1);
+  const [filter, setFilter] = useState('createdAt');
   const filterCategory = CookiesStorage.getCookieData('filterCategory') || '';
   function handleChange(value) {
+    setFilter(value);
     const data = {
       searchFilters: [
         {
@@ -63,6 +65,17 @@ function HomePage({ dataProduct, onGetViewHomeProduct }) {
       },
       joinColumnProps: [],
     };
+
+    if (filter === 'Latest Product') {
+      data.sortOrder.descendingOrder = ['createdAt'];
+    }
+    if (filter === 'Price Descending') {
+      data.sortOrder.descendingOrder = ['price'];
+    }
+
+    if (filter === 'Price Increase') {
+      data.sortOrder.ascendingOrder = ['price'];
+    }
 
     const params = {
       page: value - 1,
