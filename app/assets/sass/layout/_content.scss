@@ -581,3 +581,18 @@
     background-color: #cca47b;
   }
 }
+.haircut-content {
+  list-style-type: none;
+  margin-bottom: 0;
+  padding-left: 0;
+
+  .haircut-content-item {
+    font-size: 14px;
+    font-weight: 600;
+    padding: 10px;
+    span {
+      font-size: 14px;
+      font-weight: 400;
+    }
+  }
+}

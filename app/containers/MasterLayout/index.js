@@ -6,10 +6,10 @@ import { Switch, Route, Redirect } from 'react-router-dom';
 import HomePage from 'containers/HomePage';
 import MyProfile from 'containers/MyProfile';
 import HairsStyle from 'containers/HairsStyle';
-import GuestServices from 'containers/GuestServices';
-import AboutUs from 'containers/AboutUs';
+import HairCuts from 'containers/HairCuts';
 import BuyProduct from 'containers/BuyProduct';
 import ViewCart from 'containers/ViewCart';
+import HairCutsDetail from 'containers/HairCutsDetail';
 
 export default function MasterLayout() {
   return (
@@ -26,10 +26,10 @@ export default function MasterLayout() {
             <Route path="/products" component={HomePage} exact />
             <Route path="/my-profile" component={MyProfile} exact />
             <Route path="/hairs-style" component={HairsStyle} exact />
-            <Route path="/guest-services" component={GuestServices} exact />
-            <Route path="/about-us" component={AboutUs} exact />
+            <Route path="/hair-cuts" component={HairCuts} exact />
             <Route path="/products/:slug" component={BuyProduct} />
             <Route path="/order-list" component={ViewCart} />
+            <Route path="/hair-cuts-detail/:slug" component={HairCutsDetail} />
             <Redirect from="/" exact to="/products" />
             <Redirect to="/products" />
           </Switch>

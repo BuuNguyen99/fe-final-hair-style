@@ -158,28 +158,15 @@ function Header({
               </li>
               <li>
                 <NavLink
-                  to="/guest-services"
+                  to="/hair-cuts"
                   activeClassName="active"
                   isActive={(match, location) => {
-                    if (location.pathname.includes('guest-services')) {
+                    if (location.pathname.includes('hair-cuts')) {
                       return true;
                     }
                   }}
                 >
-                  Guest Services
-                </NavLink>
-              </li>
-              <li>
-                <NavLink
-                  to="/about-us"
-                  activeClassName="active"
-                  isActive={(match, location) => {
-                    if (location.pathname.includes('about-us')) {
-                      return true;
-                    }
-                  }}
-                >
-                  About Us
+                  Hair Cuts and Styles
                 </NavLink>
               </li>
             </ul>

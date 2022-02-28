@@ -19,3 +19,4 @@ export const GET_LIST_HAIR_STYLE = 'hairstyle/HomePage/GET_LIST_HAIR_STYLE';
 export const ADD_HAIR_STYLE = 'hairstyle/HomePage/ADD_HAIR_STYLE';
 export const DELETE_HAIR_STYLE = 'hairstyle/HomePage/DELETE_HAIR_STYLE';
 export const GET_DETAIL_HAIR = 'hairstyle/HomePage/GET_DETAIL_HAIR';
+export const ADD_COMMENT_HAIR = 'hairstyle/HomePage/ADD_COMMENT_HAIR';

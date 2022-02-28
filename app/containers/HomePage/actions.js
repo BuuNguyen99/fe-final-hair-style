@@ -20,6 +20,7 @@ import {
   DELETE_HAIR_STYLE,
   EDIT_HAIR_STYLE,
   GET_DETAIL_HAIR,
+  ADD_COMMENT_HAIR,
 } from 'containers/HomePage/constants';
 
 export function getViewHomeProduct(dataProduct, params) {
@@ -176,5 +177,13 @@ export function getDetailHair(params) {
   return {
     type: REQUEST(GET_DETAIL_HAIR),
     params,
+  };
+}
+
+export function addCommentHairs(dataComment, callBack) {
+  return {
+    type: REQUEST(ADD_COMMENT_HAIR),
+    dataComment,
+    callBack,
   };
 }

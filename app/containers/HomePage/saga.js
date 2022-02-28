@@ -23,6 +23,7 @@ import {
   DELETE_HAIR_STYLE,
   EDIT_HAIR_STYLE,
   GET_DETAIL_HAIR,
+  ADD_COMMENT_HAIR,
 } from 'containers/HomePage/constants';
 
 const { API } = ENDPOINT;
@@ -371,6 +372,21 @@ export function* getDetailHairSaga({ params }) {
   }
 }
 
+function addCommentHairApi(data) {
+  return Api.post(API.ADD_COMMENT_HAIR_API, data);
+}
+
+export function* addCommentHairSaga({ dataComment, callBack }) {
+  try {
+    yield call(addCommentHairApi, dataComment);
+    callBack?.();
+    yield put({ type: SUCCESS(ADD_COMMENT_HAIR) });
+  } catch (error) {
+    callBack?.(error);
+    yield put({ type: FAILURE(ADD_COMMENT_HAIR), error });
+  }
+}
+
 export default function* authData() {
   yield takeLatest(REQUEST(DELETE_PRODUCT_ACTION), deleteProductItemSaga);
   yield takeEvery(REQUEST(GET_LIST_PRODUCT), getViewHomeProduct);
@@ -392,4 +408,5 @@ export default function* authData() {
   yield takeLatest(REQUEST(DELETE_HAIR_STYLE), deleteHairSaga);
   yield takeLatest(REQUEST(EDIT_HAIR_STYLE), updateHairSaga);
   yield takeLatest(REQUEST(GET_DETAIL_HAIR), getDetailHairSaga);
+  yield takeLatest(REQUEST(ADD_COMMENT_HAIR), addCommentHairSaga);
 }

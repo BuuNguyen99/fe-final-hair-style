@@ -1,3 +1,4 @@
+/* eslint-disable no-nested-ternary */
 import React, { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -144,6 +145,9 @@ function AddHair({
     }
   }, []);
 
+  const [defaultFace, setDefaultFace] = useState([]);
+  const [defaultAge, setDefaultAge] = useState([]);
+
   useEffect(() => {
     if (isEdit && dataDetailHair?.data?.length !== 0) {
       setValue('hairName', dataDetailHair?.data?.name || '');
@@ -169,8 +173,14 @@ function AddHair({
 
       const dataAge = [];
       const dataFace = [];
+      const x = [];
+      const y = [];
       dataDetailHair?.data?.ageRanges?.map(el => dataAge.push(el.id));
       dataDetailHair?.data?.faceShapes?.map(el => dataFace.push(el.id));
+      dataDetailHair?.data?.ageRanges?.map(el => x.push(el.rangeDescription));
+      dataDetailHair?.data?.faceShapes?.map(el => y.push(el.name));
+      setDefaultFace([...y]);
+      setDefaultAge([...x]);
       setFaceShape({
         data: [...dataFace],
         isError: false,
@@ -269,7 +279,7 @@ function AddHair({
 
   const handleChangeGender = data => {
     setGender({
-      data,
+      data: data === 'Male' || false,
       isError: false,
     });
   };
@@ -475,7 +485,13 @@ function AddHair({
               <div className="form-group col-3">
                 <label className="mb-2 required">Gender</label>
                 <Select
-                  defaultValue={gender.data || null}
+                  defaultValue={
+                    gender.data === true
+                      ? 'Male'
+                      : gender === false
+                      ? 'Female'
+                      : null
+                  }
                   style={{ width: '100%' }}
                   onChange={handleChangeGender}
                   placeholder="Select Gender"
@@ -510,7 +526,7 @@ function AddHair({
               <div className="form-group col-6">
                 <label className="mb-2 required">Face Shape</label>
                 <Select
-                  defaultValue={faceShape.data || null}
+                  defaultValue={defaultFace || null}
                   mode="multiple"
                   style={{ width: '100%' }}
                   onChange={handleChangeFaceShape}
@@ -528,7 +544,7 @@ function AddHair({
               <div className="form-group col-6">
                 <label className="mb-2 required">Age Range</label>
                 <Select
-                  defaultValue={ageRange.data || null}
+                  defaultValue={defaultAge || null}
                   mode="multiple"
                   style={{ width: '100%' }}
                   onChange={handleChangeAgeRange}

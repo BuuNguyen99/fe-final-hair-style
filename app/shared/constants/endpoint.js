@@ -30,6 +30,7 @@ export const ENDPOINT = {
     DELETE_HAIR_STYLE_API: '/api/hairstyle/faceShape/delete',
     GET_DETAIL_HAIR_API: 'api/hairstyle/detail',
     EDIT_HAIR_STYLE_API: 'api/hairstyle/update',
+    ADD_COMMENT_HAIR_API: '/api/hairstyle/rating',
   },
   ROUTING: {
     AUTH: '/auth',
